@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FF6115">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="אנגלית ה'1">
+<style>:root{color-scheme:light}[hidden]{display:none!important}</style>
+<title>Grade 5 English Practice</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Rubik:wght@400;500;600&display=swap">
+<style>
+/* Layout: one-column phone app. Home lists the nine syllabus topics in the school's own numbering; a topic lists its exercises; an exercise is one question per screen. */
+:root{
+  --bg:#FFFCF4; --surface:#FFFFFF; --fg:#2B1608; --muted:#7A6350; --line:#EBDDCB;
+  --accent:#FF6115; --accent-fg:#2B1608; --hi:#FFD55A; --hi-fg:#3B2D00; --sky:#FFEBDD;
+  --good:#13804F; --good-bg:#DCF4E7; --bad:#B93434; --bad-bg:#FBE2E2;
+  --display:'Fredoka','Rubik',system-ui,sans-serif; --body:'Rubik',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1E140D; --surface:#2A1D13; --fg:#FFF4E6; --muted:#C2AA94; --line:#4A3626;
+  --accent:#FF6115; --accent-fg:#1E140D; --sky:#3A2718;
+  --good:#5BD49B; --good-bg:#153827; --bad:#FF8F8F; --bad-bg:#432024; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1E140D; --surface:#2A1D13; --fg:#FFF4E6; --muted:#C2AA94; --line:#4A3626;
+  --accent:#FF6115; --accent-fg:#1E140D; --sky:#3A2718;
+  --good:#5BD49B; --good-bg:#153827; --bad:#FF8F8F; --bad-bg:#432024; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;margin:0;
+  padding-block:16px 44px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#app{max-width:620px;margin:0 auto}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+bdi.en,.en{unicode-bidi:isolate}
+h1,h2{font-family:var(--display);font-weight:600;margin:0;text-wrap:balance}
+
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.top h1{font-size:1.35rem}
+.icon{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:1.3rem;cursor:pointer;display:grid;place-items:center}
+.icon svg{width:22px;height:22px;fill:currentColor}
+
+.hero{margin:6px 0 4px}
+.hero h1{font-size:2.3rem;line-height:1.1}
+.eyebrow{margin:0 0 4px;color:var(--muted);font-size:.9rem}
+.lead{margin:8px 0 0;color:var(--muted)}
+.mock{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;margin:18px 0;padding:16px 18px;border:0;border-radius:16px;background:var(--accent);color:var(--accent-fg);cursor:pointer;text-align:start}
+.mock-t{font-family:var(--display);font-size:1.4rem}
+.mock-s{opacity:.9;font-size:.95rem}
+.topics{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.topic{display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:inherit;cursor:pointer;text-align:start;font-size:1rem}
+.tile{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;color:#fff;background:hsl(var(--h) 60% 40%)}
+.tt{display:grid;min-width:0;flex:1}
+.tt b{font-weight:600;font-size:1.08rem}
+.tt .sub{color:var(--muted);font-size:.88rem}
+.meter{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--good)}
+.foot{margin:18px 0 0;color:var(--muted);font-size:.85rem}
+
+.modes{display:grid;gap:10px}
+.mode{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:inherit;cursor:pointer;text-align:start;font-size:1rem}
+.mode .tt{flex:1}
+.best{flex:none;font-size:.85rem;font-weight:600;color:var(--good);background:var(--good-bg);border-radius:999px;padding:2px 10px}
+
+.prog{display:flex;align-items:center;gap:12px;margin-bottom:10px;color:var(--muted);font-size:.9rem}
+.prog .meter{flex:1;margin:0}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:14px}
+.ins{margin:0;color:var(--muted);font-size:.95rem}
+.q{margin:0;font-family:var(--display);font-size:1.55rem;line-height:1.3;text-wrap:balance}
+.vis{display:grid;place-items:center}
+.scene{width:100%;max-width:340px;background:var(--sky);border-radius:12px}
+.s-box{fill:#C98F4F}.s-lid{fill:#A8712F}.s-wood{fill:#8B5E34}.s-floor{fill:var(--line)}
+.clock{width:150px;max-width:100%}
+.c-face{fill:var(--surface);stroke:var(--fg);stroke-width:3}
+.c-tick{stroke:var(--fg);stroke-width:1.5}
+.c-num{fill:var(--fg);font-size:8px;font-family:var(--body)}
+.c-h{stroke:var(--fg);stroke-width:4;stroke-linecap:round}
+.c-m{stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
+.c-dot{fill:var(--accent)}
+.digi{font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts.row{display:flex;flex-wrap:wrap}
+.opt{min-height:52px;padding:10px 14px;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:var(--fg);font-size:1.12rem;cursor:pointer;text-align:center}
+.opts.row .opt{flex:1 1 auto}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.ok{background:var(--good-bg);border-color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.opt .clock{width:100%;max-width:120px}
+.opt .scene{max-width:100%}
+.fb{min-height:1.5em;font-weight:500}
+.fb.good{color:var(--good)}.fb.bad{color:var(--bad)}
+.btn{padding:13px 22px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-fg);font-size:1.05rem;font-weight:500;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap}
+.blank{display:inline-block;min-width:3.2em;border-bottom:3px solid var(--hi);text-align:center}
+.hi{background:var(--hi);color:var(--hi-fg);border-radius:4px;padding:0 .2em}
+.tag{font-family:var(--body);font-size:.75rem;background:var(--hi);color:var(--hi-fg);border-radius:6px;padding:1px 7px;vertical-align:middle}
+.txt{width:100%;font:inherit;font-size:1.3rem;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:var(--fg)}
+.rub{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:3px;font-weight:400}
+.rub li::before{content:"\2713\00a0";color:var(--good);font-weight:600}
+.rub li.no::before{content:"\2717\00a0";color:var(--bad)}
+.bank{margin:0;font-size:.9rem;color:var(--muted);direction:ltr;text-align:left}
+.frame{font-size:1.2rem;color:var(--muted)}
+.passage{direction:ltr;text-align:left;background:var(--bg);border-radius:12px;padding:12px 14px;font-size:1.05rem;line-height:1.55}
+.passage p{margin:.25em 0}
+.gloss{margin:0;font-size:.85rem;color:var(--muted)}
+
+.score{text-align:center;display:grid;gap:12px;justify-items:center;padding:26px 18px}
+.score .big{font-family:var(--display);font-size:3.6rem;line-height:1;font-variant-numeric:tabular-nums}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--fg);cursor:pointer;font-size:.95rem}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.card3d{min-height:210px;display:grid;place-items:center;gap:8px;text-align:center;padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:18px;cursor:pointer;width:100%;color:var(--fg)}
+.card3d .w{font-family:var(--display);font-size:2.6rem;line-height:1.15}
+.card3d .h{font-size:2rem;font-weight:500}
+.vtable{display:grid;gap:18px}
+.vtable h2{font-size:1.1rem;margin-bottom:6px}
+.vrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:6px}
+.vrow .e{font-family:var(--display);font-size:1.15rem;direction:ltr;text-align:left}
+.vrow .hh{color:var(--muted)}
+.vrow .icon{width:38px;height:38px}
+.star{width:1.1em;height:1.1em;fill:#F5B301;vertical-align:-0.2em}
+.starcount{margin-inline-start:auto;display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--fg)}
+.plus{display:inline-flex;align-items:center;gap:3px;color:var(--fg);background:var(--hi);color:var(--hi-fg);border-radius:999px;padding:0 8px;font-size:.9rem}
+.stats{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;width:100%;margin:16px 0 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:16px;color:inherit;cursor:pointer;text-align:start;font-size:1rem}
+.stats .bigstar{grid-row:span 2;display:grid;justify-items:center;line-height:1}
+.stats .bigstar .star{width:44px;height:44px}
+.stats .bigstar b{font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stats .lv{display:grid;gap:2px;min-width:0}
+.stats .lv b{font-family:var(--display);font-size:1.15rem}
+.stats .mini{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.88rem}
+.earn{margin:0;font-family:var(--display);font-size:1.6rem}
+.lvup{margin:0;padding:10px 14px;border-radius:12px;background:var(--hi);color:var(--hi-fg)}
+.ladder{display:grid;gap:6px;margin:0 0 18px;padding:0;list-style:none}
+.ladder li{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);opacity:.55}
+.ladder li.got{opacity:1}
+.ladder li .n{margin-inline-start:auto;color:var(--muted);font-size:.88rem}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.badge{display:grid;justify-items:center;gap:4px;width:92px;text-align:center;font-size:.8rem}
+.badge .tile{width:52px;height:52px;opacity:.28}
+.badge.got .tile{opacity:1}
+.sec{margin:20px 0 8px;font-size:1.1rem}
+.ta{width:100%;min-height:84px;font:inherit;font-size:.85rem;padding:10px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--fg);direction:ltr;text-align:left;word-break:break-all}
+.dash{display:grid;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.panel h2{font-size:1.1rem}
+.hero2{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.ring{width:104px;height:104px}
+.ring .bg{fill:none;stroke:var(--line);stroke-width:10}
+.ring .fg{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50px 50px}
+.ring text{fill:var(--fg);font-family:var(--display);font-size:22px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.kpi{display:grid}
+.kpi b{font-family:var(--display);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:.85rem}
+.dot{display:inline-block;width:.8em;height:.8em;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.dot.m{background:var(--good)}.dot.p{background:var(--hi)}.dot.n{background:var(--line)}
+.seg{display:flex;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.seg .sm{background:var(--good)}.seg .sp{background:var(--hi)}
+.trow{display:grid;gap:4px}
+.trow .l{display:flex;justify-content:space-between;gap:10px}
+.trow .l span:last-child{font-variant-numeric:tabular-nums;color:var(--muted)}
+.wcs{display:flex;flex-wrap:wrap;gap:6px}
+.wc{padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--muted);cursor:pointer;font-size:.92rem}
+.wc.st-m{background:var(--good-bg);border-color:var(--good);color:var(--fg)}
+.wc.st-p{background:var(--hi);border-color:var(--hi);color:var(--hi-fg)}
+.wdet{padding:10px 12px;border-radius:12px;background:var(--sky);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+details.dd{border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+details.dd summary{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.il{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;font-size:.92rem}
+.il li{padding:4px 8px;border-radius:8px}
+.il li.st-m{background:var(--good-bg)}.il li.st-p{background:var(--hi);color:var(--hi-fg)}.il li.st-n{color:var(--muted)}
+.chart{width:100%;height:auto}
+.ch-base{stroke:var(--line);stroke-width:1}
+.ch-bar{fill:var(--accent)}
+.ch-t{fill:var(--muted);font-size:9px;font-family:var(--body)}
+.ch-v{fill:var(--fg);font-size:10px;font-weight:600;font-family:var(--body)}
+.wk{display:grid;grid-template-columns:1fr auto;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.wk:last-of-type{border-bottom:0}
+
+.cdown{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 10px;margin:14px 0 0;padding:12px 16px;border-radius:16px;background:var(--surface);border:2px dashed var(--accent)}
+.cd-n{font-family:var(--display);font-size:2.2rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.cd-t{font-family:var(--display);font-size:1.15rem}
+.cd-r{margin-inline-start:auto;color:var(--muted);font-size:.88rem}
+.daily{display:grid;gap:2px;width:100%;margin-top:10px;padding:14px 16px;border-radius:16px;border:2px solid var(--hi-fg);background:var(--hi);color:var(--hi-fg);cursor:pointer;text-align:start;font-size:1rem}
+.dl-k{font-size:.85rem;font-weight:600;letter-spacing:.02em}
+.dl-t{font-family:var(--display);font-size:1.3rem}
+.dl-s{font-size:.9rem}
+.alb{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
+.stk{display:grid;justify-items:center;gap:4px;padding:10px 6px;border-radius:14px;border:2px dashed var(--line);background:var(--bg);color:var(--muted);font-size:.85rem;text-align:center;font-family:inherit}
+.stk.got{border-style:solid;border-color:var(--accent);background:var(--surface);color:var(--fg);cursor:pointer}
+.se{font-size:2.2rem;line-height:1.1}
+.se.lock{font-family:var(--display);color:var(--line)}
+.need{font-size:.75rem}
+.newstk{display:grid;gap:8px;justify-items:center}
+.nsrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.burst{position:fixed;left:50%;top:38%;width:0;height:0;pointer-events:none;z-index:50}
+.burst span{position:absolute;left:-11px;top:-11px;animation:fly 1s ease-out forwards}
+.burst .star{width:22px;height:22px}
+@keyframes fly{from{transform:translate(0,0) scale(.4);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.1);opacity:0}}
+.plus{animation:pop .45s ease-out}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<div id="app" dir="rtl" lang="he"></div>
+
+<script>
+(function(){
+'use strict';
+var $app=document.getElementById('app');
+var TTS=typeof window.speechSynthesis!=='undefined'&&typeof window.SpeechSynthesisUtterance!=='undefined';
+function say(t){if(!TTS)return;try{var u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.82;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);}catch(e){}}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function pick(a,n){return shuffle(a).slice(0,n);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+var SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+
+var prog={};
+try{prog=JSON.parse(localStorage.getItem('g5eng')||'{}')||{};}catch(e){prog={};}
+function saveProg(){try{localStorage.setItem('g5eng',JSON.stringify(prog));}catch(e){}}
+/* Saved data lives in localStorage under fixed keys. Updates only ever add fields, so existing stars and scores stay. */
+var meta={v:1,stars:0,name:'',streak:0,last:'',todayD:'',today:0,hist:{}};
+try{var m0=JSON.parse(localStorage.getItem('g5eng-meta')||'null');if(m0&&typeof m0==='object'){for(var mk0 in m0){meta[mk0]=m0[mk0];}}}catch(e){}
+function saveMeta(){try{localStorage.setItem('g5eng-meta',JSON.stringify(meta));}catch(e){}}
+function dstr(d){d=d||new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+var STAR='<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18l-6.5 4 1.7-7.4-5.7-5 7.5-.7z"/></svg>';
+var LEVELS=[[0,'Rookie','מתחילים'],[25,'Word Explorer','חוקרי מילים'],[75,'Word Hunter','צדי מילים'],[150,'Word Knight','אבירי מילים'],[300,'Word Master','אדוני המילים'],[500,'English Champion','אלופי האנגלית']];
+function levelOf(s){var r=0;for(var k=0;k<LEVELS.length;k++){if(s>=LEVELS[k][0])r=k;}return r;}
+function touchDay(){
+  var t=dstr();
+  if(meta.last!==t){var y=new Date();y.setDate(y.getDate()-1);meta.streak=(meta.last===dstr(y))?meta.streak+1:1;meta.last=t;}
+  if(meta.todayD!==t){meta.todayD=t;meta.today=0;}
+}
+function addStars(n){touchDay();meta.stars+=n;meta.today+=n;if(!meta.hist||typeof meta.hist!=='object')meta.hist={};var dk=dstr();meta.hist[dk]=(meta.hist[dk]||0)+n;saveMeta();}
+var items={};
+try{items=JSON.parse(localStorage.getItem('g5eng-items')||'{}')||{};}catch(e){items={};}
+function saveItems(){try{localStorage.setItem('g5eng-items',JSON.stringify(items));}catch(e){}}
+/* per item: s = correct first tries in a row, c = total correct, w = total wrong. Mastered when s>=2. */
+function rec(id,first){var r=items[id]||(items[id]={s:0,c:0,w:0});if(first){r.s++;r.c++;}else{r.s=0;r.w++;}saveItems();}
+function streakNow(){var t=dstr(),y=new Date();y.setDate(y.getDate()-1);return (meta.last===t||meta.last===dstr(y))?meta.streak:0;}
+function todayStars(){return meta.todayD===dstr()?meta.today:0;}
+
+/* ---------- data ---------- */
+var POS={adj:'תואר',noun:'שם עצם',verb:'פועל',wh:'מילת שאלה',prep:'מילת יחס',day:'יום'};
+var V=[
+['afraid','מפוחד / מפחד','adj'],['beautiful','יפה','adj'],['clean','נקי','adj'],['cold','קר','adj'],['cool','קריר','adj'],['favorite','אהוב / מועדף','adj'],['fun','כיף','adj'],['happy','שמח','adj'],['hungry','רעב','adj'],['long','ארוך','adj'],['new','חדש','adj'],['nice','נחמד','adj'],['old','מבוגר / ישן','adj'],['same','אותו הדבר','adj'],['short','קצר / נמוך','adj'],['small','קטן','adj'],['tall','גבוה','adj'],
+['man','איש','noun'],['child','ילד','noun'],['cookies','עוגיות','noun'],['door','דלת','noun'],['street','רחוב','noun'],['boots','מגפיים','noun'],['flowers','פרחים','noun'],['tree','עץ','noun'],['birthday','יום הולדת','noun'],['photograph','תמונה','noun'],['kitchen','מטבח','noun'],['shoes','נעליים','noun'],
+['buy','לקנות','verb'],['clean','לנקות','verb'],['change','לשנות / להחליף','verb'],['come','לבוא','verb'],['drink','לשתות','verb'],['drive','לנהוג / לנסוע','verb'],['eat','לאכול','verb'],['feel','להרגיש','verb'],['open','לפתוח','verb'],['close','לסגור','verb'],['share','לחלוק / לשתף','verb'],['jump','לקפוץ','verb'],['wash','לשטוף','verb'],['wear','ללבוש','verb'],['wait','לחכות','verb'],['walk','ללכת','verb'],['think','לחשוב','verb'],
+['what','מה','wh'],['when','מתי / כאשר','wh'],['where','איפה / לאן','wh'],['why','למה','wh'],['who','מי','wh'],['which','איזה','wh'],['how','איך','wh'],['how many','כמה','wh'],
+['in','בתוך / ב..','prep'],['on','על / ב..','prep'],['under','מתחת','prep'],['in front of','לפני','prep'],['behind','מאחורי','prep'],['next to','ליד','prep'],['between','בין ... לבין','prep'],
+['Sunday','יום ראשון','day'],['Monday','יום שני','day'],['Tuesday','יום שלישי','day'],['Wednesday','יום רביעי','day'],['Thursday','יום חמישי','day'],['Friday','יום שישי','day'],['Saturday','יום שבת','day']
+];
+var CORE=V.filter(function(e){return e[2]==='adj'||e[2]==='noun'||e[2]==='verb';});
+var WH=V.filter(function(e){return e[2]==='wh';});
+var DAYS=V.filter(function(e){return e[2]==='day';}).map(function(e){return e[0];});
+var DAYS_HE=V.filter(function(e){return e[2]==='day';}).map(function(e){return e[1];});
+var PREPS=['in','on','under','in front of','behind','next to','between'];
+
+function mc4(correct,pool,n){
+  n=n||4;
+  var d=shuffle(pool.filter(function(x,i){return x!==correct&&pool.indexOf(x)===i;})).slice(0,n-1);
+  return shuffle([correct].concat(d)).map(function(x){return {t:esc(x),ok:x===correct};});
+}
+var PRAISE=['נכון!','יפה מאוד!','מצוין!','כל הכבוד!','בדיוק!'];
+
+/* ---------- picture helpers ---------- */
+var NUM=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+function pad(n){return n<10?'0'+n:''+n;}
+function timeSay(h,m){
+  if(m===0)return "It's "+NUM[h]+" o'clock.";
+  if(m===30)return "It's "+NUM[h]+" thirty.";
+  if(m===15)return "It's "+NUM[h]+" fifteen.";
+  return "It's "+NUM[h]+" forty-five.";
+}
+function digital(h,m){return pad(h)+':'+pad(m);}
+function clockSVG(hh,mm){
+  var t='',nums='',k,a;
+  for(k=0;k<12;k++){a=k*30*Math.PI/180;
+    t+='<line x1="'+(50+Math.sin(a)*41).toFixed(1)+'" y1="'+(50-Math.cos(a)*41).toFixed(1)+'" x2="'+(50+Math.sin(a)*45).toFixed(1)+'" y2="'+(50-Math.cos(a)*45).toFixed(1)+'" class="c-tick"/>';}
+  for(k=1;k<=12;k++){a=k*30*Math.PI/180;
+    nums+='<text x="'+(50+Math.sin(a)*33).toFixed(1)+'" y="'+(50-Math.cos(a)*33+3).toFixed(1)+'" class="c-num" text-anchor="middle">'+k+'</text>';}
+  function hand(ang,len,cls){var r=ang*Math.PI/180;return '<line x1="50" y1="50" x2="'+(50+Math.sin(r)*len).toFixed(1)+'" y2="'+(50-Math.cos(r)*len).toFixed(1)+'" class="'+cls+'"/>';}
+  return '<svg viewBox="0 0 100 100" class="clock" role="img" aria-label="analog clock"><circle cx="50" cy="50" r="47" class="c-face"/>'+t+nums+hand(((hh%12)+mm/60)*30,22,'c-h')+hand(mm*6,32,'c-m')+'<circle cx="50" cy="50" r="2.5" class="c-dot"/></svg>';
+}
+var TIMES=[[3,0],[8,0],[11,0],[6,30],[5,30],[2,45],[4,15],[10,15],[12,0],[1,0],[7,30],[9,45],[4,30],[2,0],[6,45],[9,0],[1,15],[11,30]];
+function timeOpts(t,fmt){
+  var d=shuffle(TIMES.filter(function(x){return x!==t;})).slice(0,3);
+  return shuffle([t].concat(d)).map(function(x){return {t:fmt(x),ok:x===t};});
+}
+
+var AO=[['cat','🐱'],['ball','⚽'],['teddy bear','🧸'],['book','📕'],['duck','🦆'],['shoe','👟']];
+function genScene(prep){
+  prep=prep||pick(PREPS,1)[0];
+  var a=pick(AO,1)[0],b;
+  if(prep==='in')b='box';else if(prep==='under')b='table';
+  else if(prep==='on')b=pick(['box','table'],1)[0];
+  else if(prep==='between')b='box';
+  else b=pick(['box','chair'],1)[0];
+  return {a:a,prep:prep,b:b,c:prep==='between'?'chair':null};
+}
+function sentenceOf(sc){return 'The '+sc.a[0]+' is '+sc.prep+' the '+sc.b+(sc.c?' and the '+sc.c:'')+'.';}
+function em(e,x,y,s){return '<text x="'+x+'" y="'+y+'" font-size="'+(s||36)+'" text-anchor="middle">'+e+'</text>';}
+function drawB(k,x,g){
+  if(k==='box')return '<rect x="'+(x-32)+'" y="'+(g-46)+'" width="64" height="46" rx="3" class="s-box"/><rect x="'+(x-36)+'" y="'+(g-52)+'" width="72" height="10" rx="2" class="s-lid"/>';
+  if(k==='table')return '<rect x="'+(x-48)+'" y="'+(g-58)+'" width="96" height="9" rx="2" class="s-wood"/><rect x="'+(x-42)+'" y="'+(g-50)+'" width="7" height="50" class="s-wood"/><rect x="'+(x+35)+'" y="'+(g-50)+'" width="7" height="50" class="s-wood"/>';
+  return '<text x="'+x+'" y="'+g+'" font-size="64" text-anchor="middle">🪑</text>';
+}
+function sceneSVG(sc){
+  var g=124,E=sc.a[1],h='<rect x="0" y="'+g+'" width="220" height="26" class="s-floor"/>';
+  switch(sc.prep){
+    case 'on':h+=drawB(sc.b,110,g)+em(E,110,(sc.b==='table'?g-58:g-52)+3,36);break;
+    case 'in':h+=em(E,110,g-40,38)+'<rect x="78" y="'+(g-48)+'" width="64" height="48" class="s-box"/><rect x="74" y="'+(g-52)+'" width="72" height="8" rx="2" class="s-lid"/>';break;
+    case 'under':h+=drawB('table',110,g)+em(E,110,g-3,30);break;
+    case 'behind':h+=em(E,138,g-26,40)+drawB(sc.b,105,g);break;
+    case 'in front of':h+=drawB(sc.b,100,g)+em(E,118,g+20,42);break;
+    case 'next to':h+=drawB(sc.b,70,g)+em(E,155,g,42);break;
+    default:h+=drawB('box',50,g)+drawB('chair',172,g)+em(E,111,g,42);
+  }
+  return '<svg viewBox="0 0 220 150" class="scene" role="img" aria-label="picture">'+h+'</svg>';
+}
+
+/* ---------- navigation ---------- */
+var nav=[];
+function go(fn){nav.push(fn);fn();window.scrollTo(0,0);}
+function back(){nav.pop();(nav[nav.length-1]||home)();window.scrollTo(0,0);}
+function topbar(title,canBack){
+  return '<header class="top">'+(canBack?'<button class="icon" id="back" aria-label="חזרה">→</button>':'')+'<h1>'+title+'</h1></header>';
+}
+function wireBack(){var b=document.getElementById('back');if(b)b.addEventListener('click',back);}
+
+/* ---------- quiz engine ---------- */
+function runQuiz(cfg){
+  var queue=cfg.shuffle===false?cfg.items.slice():shuffle(cfg.items);
+  if(cfg.n)queue=queue.slice(0,cfg.n);
+  var total=queue.length,i=0,score=0,mult=cfg.mult||1,roundStars=0,startLevel=levelOf(meta.stars),startStk=stkIds();
+  function draw(){
+    if(i>=queue.length)return finish();
+    var it=queue[i],answered=false,attempts=0;
+    var isType=it.kind==='type';
+    var opts=isType?null:(it.keep?it.opts:shuffle(it.opts));
+    var html=topbar(cfg.title,true)+
+      '<div class="prog"><span>'+(it.again?'ניסיון נוסף':'שאלה '+Math.min(i+1,total)+' מתוך '+total)+'</span><div class="meter"><i style="width:'+Math.round(i/queue.length*100)+'%"></i></div><span class="starcount">'+STAR+roundStars+'</span></div>'+
+      '<section class="qcard">'+
+      (it.ins?'<p class="ins">'+it.ins+'</p>':'')+
+      (it.vis?'<div class="vis">'+it.vis+'</div>':'')+
+      (it.q?'<p class="q" dir="auto">'+it.q+'</p>':'')+
+      (it.extra?it.extra:'')+
+      (it.speak&&TTS?'<div><button class="icon" id="spk" aria-label="השמעה">'+SPK+'</button></div>':'')+
+      (isType?
+        '<input class="txt" id="ans" dir="auto" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="'+(it.ph||'')+'" aria-label="תשובה">'+
+        '<div class="row-btns"><button class="btn" id="chk">בדיקה</button><button class="btn ghost" id="skip" hidden>הצגת התשובה</button></div>'
+       :'<div class="opts '+(it.cls||'')+'" dir="'+(it.optDir||'auto')+'">'+opts.map(function(o,k){return '<button class="opt" data-k="'+k+'" dir="auto">'+o.t+'</button>';}).join('')+'</div>')+
+      '<div class="fb" id="fb" role="status" aria-live="polite"></div>'+
+      '<div><button class="btn" id="next" hidden>'+(i+1<queue.length?'הבא':'סיום')+'</button></div>'+
+      '</section>';
+    $app.innerHTML=html;wireBack();
+    var fb=document.getElementById('fb'),next=document.getElementById('next');
+    var spk=document.getElementById('spk');
+    if(spk){spk.addEventListener('click',function(){say(it.speak);});if(it.autoSpeak)say(it.speak);}
+    next.addEventListener('click',function(){i++;draw();window.scrollTo(0,0);});
+    function done(ok,msg){
+      answered=true;
+      var gain=0;
+      if(it.id&&!it.again)rec(it.id,ok&&(!isType||attempts===1));
+      if(ok){if(!it.again){score++;gain=mult;roundStars+=mult;addStars(mult);chime();}if(it.sayOk)say(it.sayOk);}
+      else if(!it.again){var c={};for(var p in it)c[p]=it[p];c.again=true;queue.push(c);}
+      fb.className='fb '+(ok?'good':'bad');fb.innerHTML=msg+(gain?' <span class="plus">+'+gain+' '+STAR+'</span>':'')+(it.note?'<div class="ins">'+it.note+'</div>':'');
+      next.hidden=false;next.focus();
+    }
+    if(!isType){
+      var btns=Array.prototype.slice.call($app.querySelectorAll('.opt'));
+      btns.forEach(function(b,k){b.addEventListener('click',function(){
+        if(answered)return;
+        btns.forEach(function(x,j){x.disabled=true;if(opts[j].ok)x.classList.add('ok');});
+        var ok=opts[k].ok;if(!ok)b.classList.add('no');
+        done(ok,ok?pick(PRAISE,1)[0]:'לא בדיוק. התשובה הנכונה מסומנת בירוק.');
+      });});
+    }else{
+      var inp=document.getElementById('ans'),chk=document.getElementById('chk'),skip=document.getElementById('skip');
+      var reveal=function(){inp.disabled=true;chk.hidden=true;skip.hidden=true;done(false,'התשובה: '+(it.reveal||''));};
+      var check=function(){
+        if(answered)return;
+        var v=inp.value;if(!v.trim()){inp.focus();return;}
+        var r=it.check?it.check(v):defaultCheck(it,v);
+        attempts++;
+        if(r.ok){inp.disabled=true;chk.hidden=true;skip.hidden=true;done(true,pick(PRAISE,1)[0]+(r.html||''));}
+        else if(attempts>=2){reveal();}
+        else{fb.className='fb bad';fb.innerHTML=(r.html||'לא בדיוק. נסו שוב.');skip.hidden=false;inp.focus();}
+      };
+      chk.addEventListener('click',check);skip.addEventListener('click',reveal);
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();check();}});
+      inp.focus({preventScroll:true});
+    }
+  }
+  function finish(){
+    var pct=total?Math.round(score/total*100):0;
+    var old=prog[cfg.key]||{best:0,plays:0};
+    prog[cfg.key]={best:Math.max(old.best,pct),plays:old.plays+1};saveProg();
+    var msg=pct>=90?'מעולה! אתם מוכנים לנושא הזה.':pct>=70?'יפה מאוד. עוד סבב אחד ותהיו שם.':'ממשיכים לתרגל. כל סבב משפר.';
+    var bonus=(pct===100?5:pct>=80?3:0)*mult;
+    touchDay();if(bonus){addStars(bonus);roundStars+=bonus;}else{saveMeta();}
+    if(cfg.onFinish)cfg.onFinish(score,total);
+    refreshStickers();
+    var lv=levelOf(meta.stars);
+    var newStk=stkAll().filter(function(x){return x.ok&&startStk.indexOf(x.id)<0;});
+    var share=cfg.shareText?cfg.shareText(score,total):'';
+    $app.innerHTML=topbar(cfg.title,true)+'<section class="qcard score"><div class="big">'+score+'/'+total+'</div><p style="margin:0;font-size:1.15rem">'+msg+'</p>'+
+      '<p class="earn">+'+roundStars+' '+STAR+'</p>'+(bonus?'<p class="ins" style="margin:0">כולל בונוס של '+bonus+' על סבב מוצלח</p>':'')+
+      (lv>startLevel?'<p class="lvup">עליתם לרמה חדשה: <b class="en">'+LEVELS[lv][1]+'</b> · '+LEVELS[lv][2]+'</p>':'')+
+      (newStk.length?'<div class="newstk"><p style="margin:0">מדבקה חדשה באלבום!</p><div class="nsrow">'+newStk.map(function(x){return '<span class="stk got"><span class="se">'+x.e+'</span><bdi class="en">'+esc(x.n)+'</bdi></span>';}).join('')+'</div></div>':'')+
+      (share?'<textarea class="ta" id="fshare" readonly aria-label="תוצאה לשיתוף" style="direction:rtl;text-align:right;word-break:normal">'+esc(share)+'</textarea><div class="fb" id="fsm" role="status"></div>':'')+
+      '<div class="row-btns">'+(share?'<button class="btn" id="fsb">העתקת התוצאה לשיתוף</button>':'')+(cfg.noAgain?'':'<button class="btn" id="again">סבב חדש</button>')+'<button class="btn ghost" id="out">חזרה</button></div></section>';
+    wireBack();
+    if(bonus||lv>startLevel||newStk.length){fanfare();burst();}
+    if(share)document.getElementById('fsb').addEventListener('click',function(){copyText(share,document.getElementById('fshare'),document.getElementById('fsm'));});
+    var ag=document.getElementById('again');
+    if(ag)ag.addEventListener('click',function(){runQuiz({key:cfg.key,title:cfg.title,items:cfg.regen(),regen:cfg.regen,n:cfg.n,shuffle:cfg.shuffle,mult:cfg.mult});window.scrollTo(0,0);});
+    document.getElementById('out').addEventListener('click',back);
+  }
+  draw();
+}
+function norm(s){return String(s).toLowerCase().replace(/[.!?]+$/,'').replace(/\s+/g,' ').trim();}
+function defaultCheck(it,v){
+  var ok=it.answers.some(function(a){return norm(a)===norm(v);});
+  return {ok:ok,html:''};
+}
+function runMode(topic,m){
+  var mk=m.mk;
+  go(function(){runQuiz({key:topic.id+'.'+m.id,title:m.label,items:mk(),regen:mk,n:m.n,shuffle:m.shuffle});});
+}
+
+/* ---------- 1. name ---------- */
+function checkOwnName(v){
+  var w=v.trim().split(/\s+/);
+  var ok=w.length>=2&&w.every(function(x){return /^[A-Z]/.test(x);});
+  return {ok:ok,html:ok?'':'צריך שם פרטי ושם משפחה, וכל שם מתחיל באות גדולה. אותיות באנגלית, למשל <bdi class="en">Dan Cohen</bdi>.'};
+}
+var NAMES=[['dan cohen','Dan Cohen'],['maya levi','Maya Levi'],['tom green','Tom Green'],['lily brown','Lily Brown'],['ben katz','Ben Katz'],['sara mizrahi','Sara Mizrahi']];
+function mkName(){
+  var first={kind:'type',ins:'כתבו את השם הפרטי ושם המשפחה שלכם באנגלית.',q:'My name is …',ph:'First Last',check:checkOwnName,reveal:'<bdi class="en">Dan Cohen</bdi> (כל שם מתחיל באות גדולה)'};
+  var rest=pick(NAMES,5).map(function(n){
+    return {kind:'type',ins:'כתבו את השם עם אות גדולה בתחילת כל שם.',q:n[0],ph:'',answers:[n[1]],
+      check:function(v){var ok=v.trim().replace(/\s+/g,' ')===n[1];return {ok:ok,html:ok?'':'בדקו את האותיות הגדולות.'};},
+      reveal:'<bdi class="en">'+n[1]+'</bdi>'};
+  });
+  return [first].concat(rest);
+}
+
+/* ---------- 2. sounds ---------- */
+var LG=[['shake','chick','snake'],['beach','rich','fish'],['make','Mike','fake'],['hop','hope','cape'],['bath','brush','munch'],['cheese','sheep','three'],['tree','three','free'],['rain','ray','run'],['day','play','say'],['moon','food','book'],['cow','cone','now'],['house','mouse','horse'],['team','tame','time'],['cake','kick','cook'],['kite','kit','cut'],['feet','fit','fat'],['chair','share','pear'],['phone','photo','fan']];
+function mkListen(){
+  return pick(LG,10).map(function(g){
+    var w=pick(g,1)[0];
+    return {id:'l:'+g.join('-'),ins:'הקשיבו ולחצו על המילה שנאמרה.',speak:w,autoSpeak:true,cls:'row',optDir:'ltr',opts:g.map(function(x){return {t:esc(x),ok:x===w};}),note:'המילה: <bdi class="en">'+esc(w)+'</bdi>'};
+  });
+}
+var PAT=['ch','sh','th','ph','oo','ee','ea','ow','ou','ay','ai'];
+var GAP=[['lun__','ch','lunch'],['wa__','sh','wash'],['grandfa__er','th','grandfather'],['__one','ph','phone'],['m__n','oo','moon'],['tr__','ee','tree'],['b__ch','ea','beach'],['br__n','ow','brown'],['h__se','ou','house'],['pl__','ay','play'],['r__n','ai','rain'],['__air','ch','chair'],['fi__','sh','fish'],['ba__','th','bath'],['__oto','ph','photo'],['sp__n','oo','spoon'],['sl__p','ee','sleep'],['t__m','ea','team'],['cl__d','ou','cloud'],['fl__er','ow','flower'],['d__','ay','day'],['tr__n','ai','train'],['__ick','ch','chick'],['__eep','sh','sheep']];
+function mkGap(){
+  return pick(GAP,10).map(function(g){
+    return {id:'g:'+g[2],ins:'איזה צירוף אותיות חסר? אחרי התשובה תשמעו את המילה המלאה.',q:'<bdi class="en">'+g[0].replace('__','<span class="blank">&nbsp;&nbsp;</span>')+'</bdi>',cls:'row',optDir:'ltr',opts:mc4(g[1],PAT,4),note:'המילה: <bdi class="en">'+g[2]+'</bdi>',sayOk:g[2]};
+  });
+}
+var MAGIC=[['hop','hope'],['cap','cape'],['kit','kite'],['hat','hate'],['tub','tube'],['cub','cube'],['rob','robe'],['pin','pine'],['not','note'],['mad','made'],['plan','plane'],['cut','cute']];
+function mkMagic(){
+  return pick(MAGIC,8).map(function(m){
+    return {id:'m:'+m[1],kind:'type',ins:'מוסיפים Magic e בסוף. איזו מילה מתקבלת?',q:'<bdi class="en">'+m[0]+' + e = ?</bdi>',ph:'word',answers:[m[1]],reveal:'<bdi class="en">'+m[1]+'</bdi>',sayOk:m[1]};
+  });
+}
+
+/* ---------- 3. WH ---------- */
+var WT=[[['What','is','your','favorite','color'],'What'],[['Where','does','Pete','live'],'Where'],[['When','do','you','go','to','school'],'When'],[['Why','are','you','happy'],'Why'],[['Who','is','your','best','friend'],'Who'],[['Which','book','do','you','like'],'Which'],[['How','do','you','go','to','school'],'How'],[['How many','cookies','do','you','have'],'How many'],[['What','do','you','eat','in','the','kitchen'],'What'],[['Where','is','the','cat'],'Where'],[['Who','is','in','the','kitchen'],'Who'],[['When','is','your','birthday'],'When']];
+function mkWHtap(){
+  return pick(WT,10).map(function(w){
+    return {id:'wt:'+w[0].join(' '),ins:'לחצו על מילת השאלה במשפט.',keep:true,cls:'row',optDir:'ltr',opts:w[0].map(function(t){return {t:esc(t),ok:t===w[1]};}),note:'מילת השאלה: <bdi class="en">'+w[1]+'</bdi>'};
+  });
+}
+var WA=[['I live in America.','where'],["At eight o'clock.",'when'],['Pete is my friend.','who'],['Because I am hungry.','why'],['By bike.','how'],['I have five cookies.','how many'],['It is a red ball.','what'],['The blue one.','which'],['In the kitchen.','where'],['On Sunday.','when'],['My teacher.','who'],['Because it is cold.','why'],['Three books.','how many'],['I go by bus.','how'],['It is a tree.','what'],['The tall one.','which']];
+function mkWHans(){
+  var pool=WH.map(function(e){return cap(e[0]);});
+  return pick(WA,10).map(function(a){
+    return {id:'wa:'+a[0],ins:'איזו מילת שאלה מתאימה לתשובה?',q:'<bdi class="en">'+esc(a[0])+'</bdi>',cls:'two',optDir:'ltr',opts:mc4(cap(a[1]),pool,4)};
+  });
+}
+function mkWHmean(){
+  var pool=WH.map(function(e){return e[1];});
+  return shuffle(WH).map(function(e){
+    return {id:'w:'+e[0]+'|wh',ins:'מה פירוש המילה?',q:'<bdi class="en">'+cap(e[0])+'</bdi>',speak:e[0],opts:mc4(e[1],pool,4)};
+  });
+}
+
+/* ---------- 4. vocabulary ---------- */
+function tagOf(e){return ' <span class="tag">'+POS[e[2]]+'</span>';}
+function mkVEnHe(){
+  return pick(CORE,12).map(function(e){
+    var pool=V.filter(function(x){return x[2]===e[2];}).map(function(x){return x[1];});
+    return {id:'w:'+e[0]+'|'+e[2],ins:'מה פירוש המילה?',q:'<bdi class="en">'+e[0]+'</bdi>'+tagOf(e),speak:e[0],opts:mc4(e[1],pool,4)};
+  });
+}
+function mkVHeEn(){
+  return pick(CORE,12).map(function(e){
+    var pool=V.filter(function(x){return x[2]===e[2];}).map(function(x){return x[0];});
+    return {id:'w:'+e[0]+'|'+e[2],ins:'איך אומרים באנגלית?',q:esc(e[1])+tagOf(e),optDir:'ltr',cls:'two',opts:mc4(e[0],pool,4),sayOk:e[0]};
+  });
+}
+function mkVType(){
+  return pick(CORE,10).map(function(e){
+    return {id:'w:'+e[0]+'|'+e[2],kind:'type',ins:'כתבו באנגלית. שימו לב לאיות.',q:esc(e[1])+tagOf(e),ph:'English word',answers:[e[0]],reveal:'<bdi class="en">'+e[0]+'</bdi>',sayOk:e[0]};
+  });
+}
+var BANK=['birthday','fun','wait','eat','cold','boots','wash','happy','afraid','kitchen','share','favorite','shoes','door','drink'];
+var CL=[['My car is dirty. I need to ___ it.','wash'],['It\'s nice to ___ toys with friends.','share'],['We ___ for the bus at the bus station.','wait'],['The weather is ___ and snowy.','cold'],['My ___ food is spaghetti.','favorite'],['I smile when I am ___.','happy'],['We need to ___ a lot of water in the summer.','drink'],['We need to ___ when we are hungry.','eat'],['The ___ is open. Can you close it?','door'],['I need to buy balloons for the ___ party.','birthday'],['It\'s ___ to watch movies together.','fun'],['The mouse is ___ of the cat.','afraid'],['We wear ___ and shoes on our feet.','boots'],['We wear boots and ___ on our feet.','shoes'],['We make food in the ___.','kitchen'],['Please ___ the door. It is cold.','close'],['I ___ my new shoes every day.','wear'],['My grandfather likes to ___ his car.','drive'],['I want to ___ a new toy in the store.','buy'],['My brother is very ___. He can touch the ceiling.','tall'],['Look at the pretty ___ in the garden.','flowers']];
+function mkCloze(){
+  var pool=BANK.concat(['close','wear','drive','buy','tall','flowers']);
+  return pick(CL,10).map(function(c){
+    return {id:'c:'+c[0],ins:'בחרו את המילה שמשלימה את המשפט.',q:'<bdi class="en">'+esc(c[0]).replace('___','<span class="blank">&nbsp;</span>')+'</bdi>',optDir:'ltr',cls:'two',opts:mc4(c[1],pool,4),note:'<bdi class="en">'+esc(c[0].replace('___',c[1]))+'</bdi>',sayOk:c[0].replace('___',c[1])};
+  });
+}
+var CATS=[['all','הכול',null],['adj','תארים','adj'],['noun','שמות עצם','noun'],['verb','פעלים','verb'],['wh','שאלה','wh'],['prep','יחס','prep'],['day','ימים','day']];
+function filtered(cat){return cat==='all'?V:V.filter(function(e){return e[2]===cat;});}
+function catChips(cur){return '<div class="chips">'+CATS.map(function(c){return '<button class="chip" data-c="'+c[0]+'" aria-pressed="'+(c[0]===cur)+'">'+c[1]+'</button>';}).join('')+'</div>';}
+function flash(){
+  var cat='all',idx=0,flip=false,deck=shuffle(V);
+  function draw(){
+    var e=deck[idx];
+    $app.innerHTML=topbar('כרטיסיות',true)+catChips(cat)+
+      '<button class="card3d" id="card" aria-label="הפיכת הכרטיס">'+(flip?'<span class="h">'+esc(e[1])+'</span><span class="tag">'+POS[e[2]]+'</span>':'<span class="w en">'+esc(e[0])+'</span><span class="tag">'+POS[e[2]]+'</span>')+'</button>'+
+      '<p class="ins" style="text-align:center">'+(idx+1)+' מתוך '+deck.length+' · לחצו על הכרטיס כדי להפוך</p>'+
+      '<div class="row-btns" style="justify-content:center"><button class="icon" id="prev" aria-label="הקודם">→</button><button class="icon" id="spk" aria-label="השמעה">'+SPK+'</button><button class="icon" id="nx" aria-label="הבא">←</button></div>';
+    wireBack();
+    document.getElementById('card').addEventListener('click',function(){flip=!flip;draw();});
+    document.getElementById('prev').addEventListener('click',function(){idx=(idx-1+deck.length)%deck.length;flip=false;draw();});
+    document.getElementById('nx').addEventListener('click',function(){idx=(idx+1)%deck.length;flip=false;draw();});
+    document.getElementById('spk').addEventListener('click',function(){say(e[0]);});
+    Array.prototype.forEach.call($app.querySelectorAll('.chip'),function(b){b.addEventListener('click',function(){cat=b.getAttribute('data-c');deck=shuffle(filtered(cat));idx=0;flip=false;draw();});});
+  }
+  draw();
+}
+function vtable(){
+  var h=topbar('כל המילים',true)+'<div class="vtable">';
+  CATS.slice(1).forEach(function(c){
+    h+='<section><h2>'+c[1]+'</h2>'+filtered(c[0]).map(function(e){
+      return '<div class="vrow"><button class="icon say" data-w="'+esc(e[0])+'" aria-label="השמעה">'+SPK+'</button><span class="e">'+esc(e[0])+'</span><span class="hh">'+esc(e[1])+'</span></div>';}).join('')+'</section>';
+  });
+  $app.innerHTML=h+'</div>';wireBack();
+  Array.prototype.forEach.call($app.querySelectorAll('.say'),function(b){b.addEventListener('click',function(){say(b.getAttribute('data-w'));});});
+}
+
+/* ---------- 5. clock ---------- */
+function mkClkA(){
+  return pick(TIMES,10).map(function(t){
+    return {id:'t:'+digital(t[0],t[1]),ins:'איזה שעון מתאים למשפט?',q:esc(timeSay(t[0],t[1])),speak:timeSay(t[0],t[1]),cls:'two',optDir:'ltr',opts:timeOpts(t,function(x){return clockSVG(x[0],x[1]);})};
+  });
+}
+function mkClkB(){
+  return pick(TIMES,10).map(function(t){
+    return {id:'t:'+digital(t[0],t[1]),ins:'איזו שעה מראה השעון?',vis:clockSVG(t[0],t[1]),optDir:'ltr',opts:timeOpts(t,function(x){return esc(timeSay(x[0],x[1]));}),note:'<bdi class="en">'+digital(t[0],t[1])+'</bdi>'};
+  });
+}
+function mkClkD(){
+  return pick(TIMES,8).map(function(t){
+    return {id:'t:'+digital(t[0],t[1]),ins:'איזה שעון דיגיטלי מתאים למשפט?',q:esc(timeSay(t[0],t[1])),cls:'two',optDir:'ltr',opts:timeOpts(t,function(x){return '<span class="digi">'+digital(x[0],x[1])+'</span>';})};
+  });
+}
+function mkClkW(){
+  return pick(TIMES,8).map(function(t){
+    var want=t[0]+':'+pad(t[1]);
+    return {id:'t:'+digital(t[0],t[1]),kind:'type',ins:'כתבו את השעה בספרות, כמו בשעון דיגיטלי (למשל 6:30).',q:esc(timeSay(t[0],t[1])),ph:'0:00',
+      check:function(v){var s=v.replace(/\s/g,'').replace('.',':').replace(/^0/,'');return {ok:s===want,html:''};},
+      reveal:'<bdi class="en">'+digital(t[0],t[1])+'</bdi>'};
+  });
+}
+
+/* ---------- 6. days ---------- */
+function mkDaysRel(){
+  var items=[];
+  for(var n=0;n<10;n++){
+    var d=Math.floor(Math.random()*7);
+    var day=[(d+6)%7,d,(d+1)%7];
+    var txt=['Yesterday was','Today is','Tomorrow will be'];
+    var g=Math.floor(Math.random()*3),a;do{a=Math.floor(Math.random()*3);}while(a===g);
+    var q=txt[g]+' '+DAYS[day[g]]+'. '+txt[a]+' <span class="blank">&nbsp;</span>.';
+    items.push({id:'d:'+DAYS[day[a]],ins:'השלימו את היום החסר.',q:'<bdi class="en">'+q+'</bdi>',cls:'two',optDir:'ltr',opts:mc4(DAYS[day[a]],DAYS,4),note:'<bdi class="en">'+txt[a]+' '+DAYS[day[a]]+'.</bdi>',sayOk:txt[a]+' '+DAYS[day[a]]});
+  }
+  return items;
+}
+function mkDaysHeb(){
+  return shuffle(DAYS.map(function(d,i){return i;})).map(function(i){
+    var rev=Math.random()<0.5;
+    return rev?{id:'d:'+DAYS[i],ins:'איך אומרים באנגלית?',q:esc(DAYS_HE[i]),cls:'two',optDir:'ltr',opts:mc4(DAYS[i],DAYS,4),sayOk:DAYS[i]}
+              :{id:'d:'+DAYS[i],ins:'איזה יום זה?',q:'<bdi class="en">'+DAYS[i]+'</bdi>',speak:DAYS[i],opts:mc4(DAYS_HE[i],DAYS_HE,4)};
+  });
+}
+
+/* ---------- 7. prepositions ---------- */
+function mkPrepFill(){
+  var sc=[];PREPS.forEach(function(p){sc.push(genScene(p),genScene(p));});
+  return pick(sc,10).map(function(s){
+    var q='The '+s.a[0]+' is <span class="blank">&nbsp;</span> the '+s.b+(s.c?' and the '+s.c:'')+'.';
+    return {id:'p:'+s.prep,ins:'איפה החפץ? בחרו את מילת היחס.',vis:sceneSVG(s),q:'<bdi class="en">'+q+'</bdi>',cls:'two',optDir:'ltr',opts:mc4(s.prep,PREPS,4),note:'<bdi class="en">'+esc(sentenceOf(s))+'</bdi>',sayOk:sentenceOf(s)};
+  });
+}
+function mkPrepPick(){
+  var five=['in','on','behind','in front of','next to'];
+  return shuffle(five.concat(five)).slice(0,8).map(function(p){
+    var a=pick(AO,1)[0];
+    var set=shuffle([p].concat(shuffle(five.filter(function(x){return x!==p;})).slice(0,3)));
+    var sc={a:a,prep:p,b:'box',c:null};
+    return {id:'p:'+p,ins:'איזו תמונה מתאימה למשפט?',q:'<bdi class="en">'+esc(sentenceOf(sc))+'</bdi>',cls:'two',optDir:'ltr',
+      opts:set.map(function(x){return {t:sceneSVG({a:a,prep:x,b:'box',c:null}),ok:x===p};})};
+  });
+}
+function mkPrepMean(){
+  var P=V.filter(function(e){return e[2]==='prep';});
+  var he=P.map(function(e){return e[1];}),en=P.map(function(e){return e[0];});
+  return shuffle(P).map(function(e){
+    return Math.random()<0.5?{id:'w:'+e[0]+'|prep',ins:'מה פירוש מילת היחס?',q:'<bdi class="en">'+e[0]+'</bdi>',speak:e[0],opts:mc4(e[1],he,4)}
+      :{id:'w:'+e[0]+'|prep',ins:'איך אומרים באנגלית?',q:esc(e[1]),cls:'two',optDir:'ltr',opts:mc4(e[0],en,4),sayOk:e[0]};
+  });
+}
+
+/* ---------- 8. reading ---------- */
+var P1={title:'Pete',lines:['My name is Pete.','I live in America. I live next to my school.','I go to school at eight o\'clock by bike. I am in grade 5.','I am good at tennis. I like to play tennis with my friends.','After school, I meet lots of friends at the park.','I am going to sleep early, because I have school tomorrow.'],
+  gloss:'early = מוקדם · because = כי · tomorrow = מחר · lots of = הרבה',
+  qs:[['Where does Pete live?','In America.',['In Israel.','In the park.']],['When does Pete go to school?','At eight o\'clock.',['At nine o\'clock.','After school.']],['Who does Pete meet at the park?','His friends.',['His teacher.','His brother.']],['Why does Pete go to sleep early?','Because he has school tomorrow.',['Because he is hungry.','Because he is cold.']],['How does Pete go to school?','By bike.',['By bus.','By car.']],['What is Pete good at?','Tennis.',['Football.','Swimming.']],['Which grade is Pete in?','Grade 5.',['Grade 4.','Grade 6.']]]};
+var P2={title:'Maya',lines:['My name is Maya.','I live in Israel. I live next to the park.','I go to school at eight o\'clock by bus. I am in grade 5.','I am good at swimming. I like to swim with my sister.','After school, I eat lunch in the kitchen.','I go to sleep early, because I am tired.'],
+  gloss:'tired = עייף · swim = לשחות · lunch = ארוחת צהריים',
+  qs:[['Where does Maya live?','In Israel.',['In America.','In the kitchen.']],['How does Maya go to school?','By bus.',['By bike.','By car.']],['Who does Maya swim with?','Her sister.',['Her friends.','Her teacher.']],['Where does Maya eat lunch?','In the kitchen.',['At the park.','At school.']],['Why does Maya go to sleep early?','Because she is tired.',['Because she is happy.','Because she is cold.']],['What is Maya good at?','Swimming.',['Tennis.','Drawing.']]]};
+var P3={title:'Tom',lines:['This is Tom. He is ten years old.','He has two dogs and one cat.','His favorite food is pizza.','On Saturday, Tom meets his friends in the street.','They play football. Tom is happy on Saturday.'],
+  gloss:'years old = בן ... · dogs = כלבים · football = כדורגל',
+  qs:[['How many dogs does Tom have?','Two.',['One.','Three.']],['What is Tom\'s favorite food?','Pizza.',['Cookies.','Spaghetti.']],['Where does Tom meet his friends?','In the street.',['In the kitchen.','At school.']],['When does Tom meet his friends?','On Saturday.',['On Sunday.','On Friday.']],['What do they play?','Football.',['Tennis.','Cards.']],['Who does Tom meet?','His friends.',['His cat.','His dogs.']]]};
+function mkRead(p){
+  var vis='<div class="passage">'+p.lines.map(function(l){return '<p>'+esc(l)+'</p>';}).join('')+'</div><p class="gloss">'+esc(p.gloss)+'</p>';
+  return p.qs.map(function(x){
+    return {id:'r:'+p.title+'|'+x[0],ins:'קראו את הקטע וענו על השאלה.',extra:vis,q:'<bdi class="en">'+esc(x[0])+'</bdi>',optDir:'ltr',
+      opts:[{t:esc(x[1]),ok:true}].concat(x[2].map(function(w){return {t:esc(w),ok:false};}))};
+  });
+}
+
+/* ---------- 9. writing ---------- */
+var KNOWN={};'the is are a and cat ball teddy bear book duck shoe box table chair in on under next to behind front of between'.split(' ').forEach(function(w){KNOWN[w]=1;});
+function checkSentence(v,sc){
+  var t=v.trim(),low=t.toLowerCase().replace(/[.,!?]/g,'').replace(/\s+/g,' ');
+  var words=low.split(' ').filter(Boolean);
+  var r1=/^[A-Z]/.test(t),r2=/\.$/.test(t);
+  var r3=(' '+low+' ').indexOf(' '+sc.prep+' ')>=0;
+  var r4=/(^| )(is|are)( |$)/.test(low);
+  var unknown=words.filter(function(w){return !KNOWN[w];});
+  var r5=words.length>0&&unknown.length===0;
+  var iA=low.indexOf(sc.a[0]),iP=(' '+low+' ').indexOf(' '+sc.prep+' ')-1,iB=low.lastIndexOf(sc.b);
+  var r6=iA>=0&&iP>iA&&iB>iP&&(!sc.c||low.lastIndexOf(sc.c)>iB);
+  var ok=r1&&r2&&r3&&r4&&r5&&r6;
+  var row=function(b,s){return '<li class="'+(b?'':'no')+'">'+s+'</li>';};
+  var html='<ul class="rub">'+row(r1,'אות גדולה בתחילת המשפט')+row(r2,'נקודה בסוף המשפט')+row(r3,'מילת היחס הנכונה')+row(r4,'המילה is / are')+row(r5,'איות תקין'+(unknown.length&&words.length?' (בדקו: <bdi class="en">'+esc(unknown.join(', '))+'</bdi>)':''))+row(r6,'המשפט מתאר את התמונה')+'</ul>';
+  return {ok:ok,html:html};
+}
+function mkWrite(){
+  return pick(PREPS.map(function(p){return genScene(p);}),7).map(function(sc){
+    return {id:'ws:'+sc.prep,kind:'type',ins:'הסתכלו בתמונה וכתבו משפט עם מילת יחס. כתבו אות גדולה בהתחלה ונקודה בסוף.',vis:sceneSVG(sc),
+      q:'<span class="frame en">The ______ is / are ______ the ______ .</span>',
+      extra:'<p class="bank">Word bank: cat, ball, teddy bear, book, duck, shoe, box, table, chair · in, on, under, in front of, behind, next to, between</p>',
+      ph:'The cat is on the box.',check:function(v){return checkSentence(v,sc);},
+      reveal:'<bdi class="en">'+esc(sentenceOf(sc))+'</bdi>'};
+  });
+}
+
+/* ---------- mock test ---------- */
+function mkMock(){
+  var parts=[[mkListen,TTS?2:0],[mkGap,TTS?2:3],[mkWHtap,1],[mkWHans,2],[mkVEnHe,3],[mkVHeEn,2],[mkCloze,3],[mkClkA,2],[mkClkB,1],[mkDaysRel,2],[mkPrepFill,2],[function(){return mkRead(pick([P1,P2,P3],1)[0]);},3],[mkWrite,1]];
+  var out=[];parts.forEach(function(p){out=out.concat(pick(p[0](),p[1]));});
+  return out;
+}
+
+/* ---------- topics ---------- */
+var TOPICS=[
+ {id:'name',n:1,he:'כתיבת שם',en:'Capital letters',h:215,modes:[{id:'caps',label:'אות גדולה בשם',desc:'שם פרטי ושם משפחה, כל אחד באות גדולה',mk:mkName,shuffle:false}]},
+ {id:'sounds',n:2,he:'חוקי קריאה וצלילים',en:'ch sh th ph oo ee ea ow ou ay ai · magic e',h:265,modes:[
+   {id:'listen',label:'האזנה: מה שמעתם?',desc:'שומעים מילה ומקיפים אותה',mk:mkListen,n:10,snd:true},
+   {id:'gap',label:'משלימים את הצליל',desc:'איזה צירוף אותיות חסר במילה',mk:mkGap,n:10},
+   {id:'magic',label:'Magic e',desc:'hop + e = hope',mk:mkMagic,n:8}]},
+ {id:'wh',n:3,he:'מילות שאלה',en:'what, why, where, when, who, which, how, how many',h:170,modes:[
+   {id:'tap',label:'מוצאים את מילת השאלה',desc:'לוחצים על מילת השאלה במשפט',mk:mkWHtap,n:10},
+   {id:'ans',label:'איזו מילת שאלה מתאימה?',desc:'מתאימים מילת שאלה לתשובה',mk:mkWHans,n:10},
+   {id:'mean',label:'מה פירוש המילה?',desc:'מילות השאלה בעברית',mk:mkWHmean,n:8}]},
+ {id:'vocab',n:4,he:'אוצר מילים',en:'afraid, beautiful, clean …',h:25,modes:[
+   {id:'table',label:'כל המילים',desc:'הטבלה מהמבחן, עם השמעה',run:vtable},
+   {id:'cards',label:'כרטיסיות',desc:'הופכים כרטיס ובודקים את עצמכם',run:flash},
+   {id:'enhe',label:'אנגלית ← עברית',desc:'מה פירוש המילה',mk:mkVEnHe,n:12},
+   {id:'heen',label:'עברית ← אנגלית',desc:'בוחרים את המילה באנגלית',mk:mkVHeEn,n:12},
+   {id:'type',label:'כתיבה ואיות',desc:'רואים עברית וכותבים באנגלית',mk:mkVType,n:10},
+   {id:'cloze',label:'משלימים משפטים',desc:'כמו בדף התרגול',mk:mkCloze,n:10}]},
+ {id:'clock',n:5,he:'השעון',en:"o'clock, fifteen, thirty, forty-five",h:340,modes:[
+   {id:'a',label:'מתאימים שעון למשפט',desc:'קוראים משפט ובוחרים שעון',mk:mkClkA,n:10},
+   {id:'b',label:'קוראים שעון',desc:'רואים שעון ובוחרים משפט',mk:mkClkB,n:10},
+   {id:'d',label:'שעון דיגיטלי',desc:'מתאימים משפט לשעה בספרות',mk:mkClkD,n:8},
+   {id:'w',label:'כותבים את השעה',desc:'מקלידים 6:30',mk:mkClkW,n:8}]},
+ {id:'days',n:6,he:'ימות השבוע',en:'Today is… Yesterday was… Tomorrow will be…',h:130,modes:[
+   {id:'rel',label:'אתמול, היום, מחר',desc:'משלימים את היום החסר',mk:mkDaysRel,n:10},
+   {id:'heb',label:'שמות הימים',desc:'עברית ואנגלית',mk:mkDaysHeb,n:7}]},
+ {id:'prep',n:7,he:'מילות יחס',en:'in, on, under, in front of, behind, next to, between',h:195,modes:[
+   {id:'fill',label:'איפה החפץ?',desc:'רואים תמונה ובוחרים מילת יחס',mk:mkPrepFill,n:10},
+   {id:'pick',label:'איזו תמונה מתאימה?',desc:'קוראים משפט ובוחרים תמונה',mk:mkPrepPick,n:8},
+   {id:'mean',label:'מה פירוש מילת היחס?',desc:'עברית ואנגלית',mk:mkPrepMean,n:7}]},
+ {id:'read',n:8,he:'הבנת הנקרא',en:'Read and answer',h:45,modes:[
+   {id:'pete',label:'Pete',desc:'הקטע מדף התרגול',mk:function(){return mkRead(P1);},n:7},
+   {id:'maya',label:'Maya',desc:'קטע חדש באותה רמה',mk:function(){return mkRead(P2);},n:6},
+   {id:'tom',label:'Tom',desc:'קטע חדש באותה רמה',mk:function(){return mkRead(P3);},n:6}]},
+ {id:'write',n:9,he:'כתיבה',en:'The ___ is ___ the ___.',h:290,modes:[
+   {id:'sentences',label:'כותבים משפטי יחס',desc:'לפי מחוון הכתיבה של המבחן',mk:mkWrite,n:5}]}
+];
+
+/* ---------- screens ---------- */
+function topicStatus(t){
+  var d=t.modes.filter(function(m){return prog[t.id+'.'+m.id];}).length;
+  var tot=t.modes.length;
+  return {d:d,tot:tot,pct:Math.round(d/tot*100)};
+}
+function home(){
+  nav=[home];
+  refreshStickers();
+  var mb=prog.mock?'<span class="mock-s">התוצאה הכי טובה: '+prog.mock.best+'%</span>':'<span class="mock-s">25 שאלות מכל הנושאים, וכוכבים כפולים</span>';
+  var L=levelOf(meta.stars),nx=LEVELS[L+1],lvPct=nx?Math.round((meta.stars-LEVELS[L][0])/(nx[0]-LEVELS[L][0])*100):100;
+  var cd=countdown(),dl=!!(meta.daily&&meta.daily.d===dstr());
+  var sa=stkAll(),sgot=sa.filter(function(x){return x.ok;}).length,nxs=sa.filter(function(x){return !x.ok&&x.need;})[0];
+  $app.innerHTML='<header class="hero"><p class="eyebrow">כיתה '+CLASS.name+' · המבחן '+CLASS.testDay+'</p><h1>תרגול אנגלית</h1><p class="lead">התרגול של '+CLASS.name+' למבחן. תשעה נושאים בדיוק לפי החומר, כל תשובה נכונה נותנת כוכב, ובכל תרגיל אפשר ללחוץ על הרמקול ולשמוע.</p></header>'+
+   '<div class="cdown"><span class="cd-n">'+cd.n+'</span><span class="cd-t">'+cd.t+'</span><span class="cd-r">מוכנים: '+readyCount()+'/9 נושאים</span></div>'+
+   '<button class="stats" id="mystars"><span class="bigstar">'+STAR+'<b>'+meta.stars+'</b></span><span class="lv"><b class="en">'+LEVELS[L][1]+'</b><span class="meter"><i style="width:'+lvPct+'%"></i></span><span class="mini"><span>'+(nx?'עוד '+(nx[0]-meta.stars)+' כוכבים לרמה הבאה':'הגעתם לרמה הגבוהה ביותר')+'</span></span></span><span class="mini" style="grid-column:1/-1"><span>היום: '+todayStars()+'</span><span>רצף: '+streakNow()+' ימים</span><span>הכוכבים שלי ←</span></span></button>'+
+   '<button class="daily" id="daily"><span class="dl-k">האתגר היומי · '+dshort()+'</span><span class="dl-t">'+(dl?'התוצאה שלכם היום: '+meta.daily.s+'/'+meta.daily.t:'10 שאלות, אותן שאלות לכל הכיתה')+'</span><span class="dl-s">'+(dl?'אפשר לשחק שוב, בלי כוכבים כפולים. מחר יש אתגר חדש.':'כוכבים כפולים בפעם הראשונה היום')+'</span></button>'+
+   '<button class="mode" id="album" style="margin-top:10px"><span class="tt"><b>אלבום המדבקות</b><span class="sub">'+sgot+' מתוך '+sa.length+(nxs?' · עוד '+(nxs.need-meta.stars)+' כוכבים למדבקה הבאה':'')+'</span></span></button>'+
+   '<button class="mode" id="dash" style="margin-top:10px"><span class="tt"><b>לוח התקדמות</b><span class="sub">'+dashSum()+'</span></span></button>'+
+   '<button class="mock" id="mock"><span class="mock-t">מבחן דמה</span>'+mb+'</button>'+
+   '<ol class="topics">'+TOPICS.map(function(t,i){var s=topicStatus(t);
+     return '<li><button class="topic" data-i="'+i+'"><span class="tile" style="--h:'+t.h+'">'+t.n+'</span><span class="tt"><b>'+t.he+'</b><span class="sub en">'+esc(t.en)+'</span><span class="meter"><i style="width:'+s.pct+'%"></i></span></span></button></li>';}).join('')+'</ol>'+
+   '<p class="foot">הכוכבים וההתקדמות נשמרים במכשיר הזה. במסך "הכוכבים שלי" יש קוד גיבוי למעבר למכשיר אחר.</p>';
+  document.getElementById('mock').addEventListener('click',function(){go(function(){runQuiz({key:'mock',title:'מבחן דמה',items:mkMock(),regen:mkMock,shuffle:false,mult:2});});});
+  document.getElementById('mystars').addEventListener('click',function(){go(myStars);});
+  document.getElementById('dash').addEventListener('click',function(){go(dashboard);});
+  document.getElementById('daily').addEventListener('click',startDaily);
+  document.getElementById('album').addEventListener('click',function(){go(album);});
+  Array.prototype.forEach.call($app.querySelectorAll('.topic'),function(b){b.addEventListener('click',function(){var t=TOPICS[+b.getAttribute('data-i')];go(function(){topicScreen(t);});});});
+}
+function topicScreen(t){
+  $app.innerHTML=topbar(t.n+'. '+t.he,true)+'<div class="modes">'+t.modes.map(function(m,i){
+    var p=prog[t.id+'.'+m.id];
+    var off=m.snd&&!TTS;
+    return '<button class="mode" data-i="'+i+'"'+(off?' disabled style="opacity:.55;cursor:default"':'')+'><span class="tt"><b>'+m.label+'</b><span class="sub">'+(off?'התרגיל הזה צריך קול, והמכשיר הזה לא תומך בו':m.desc)+'</span></span>'+(p?'<span class="best">'+p.best+'%</span>':'')+'</button>';}).join('')+'</div>';
+  wireBack();
+  Array.prototype.forEach.call($app.querySelectorAll('.mode'),function(b){b.addEventListener('click',function(){
+    var m=t.modes[+b.getAttribute('data-i')];
+    if(m.run)go(m.run);else runMode(t,m);
+  });});
+}
+/* ---------- class, daily challenge, stickers, celebration ---------- */
+var CLASS={name:"ה'1",test:'2026-11-02',testDay:'ביום ב׳, 2.11'};
+function countdown(){
+  var p=CLASS.test.split('-'),t=new Date(+p[0],+p[1]-1,+p[2]),n=new Date();n=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  var d=Math.round((t-n)/864e5);
+  if(d>1)return {n:d,t:'ימים למבחן'};
+  if(d===1)return {n:'מחר',t:'המבחן. עוד סבב אחד קטן?'};
+  if(d===0)return {n:'היום',t:'המבחן. בהצלחה!'};
+  return {n:'✓',t:'המבחן מאחורינו. כל הכבוד על התרגול!'};
+}
+function topicDone(t){return t.modes.every(function(m){var p=prog[t.id+'.'+m.id];return m.run||(m.snd&&!TTS)||(p&&p.best>=80);});}
+function readyCount(){return TOPICS.filter(topicDone).length;}
+function dshort(){var d=new Date();return d.getDate()+'.'+(d.getMonth()+1);}
+function seeded(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+/* Same date = same questions for every student. Option order is still shuffled per screen. */
+function mkDaily(){
+  var d=dstr(),seed=7;for(var k=0;k<d.length;k++)seed=(seed*31+d.charCodeAt(k))|0;
+  var orig=Math.random,out=[];Math.random=seeded(seed);
+  try{[mkGap,mkWHans,mkVEnHe,mkVHeEn,mkCloze,mkClkA,mkClkB,mkDaysRel,mkPrepFill,function(){return mkRead(pick([P1,P2,P3],1)[0]);}].forEach(function(g){out.push(pick(g(),1)[0]);});}
+  finally{Math.random=orig;}
+  return out;
+}
+function startDaily(){
+  var played=!!(meta.daily&&meta.daily.d===dstr());
+  go(function(){runQuiz({key:'daily',title:'האתגר היומי',items:mkDaily(),regen:mkDaily,shuffle:false,mult:played?1:2,noAgain:true,
+    onFinish:function(sc,tt){if(!played){meta.daily={d:dstr(),s:sc,t:tt};meta.dailyCount=(meta.dailyCount||0)+1;if(sc===tt)meta.dailyPerfect=true;saveMeta();}},
+    shareText:function(sc,tt){var r=played&&meta.daily?meta.daily:{s:sc,t:tt};return 'האתגר היומי של '+CLASS.name+' · '+dshort()+'\n'+(meta.name?meta.name+': ':'')+r.s+'/'+r.t+' ⭐\nמי עוד שיחק היום?';}});});
+}
+var STK_SETS=[['חיות',[['🐶','dog'],['🐱','cat'],['🦊','fox'],['🐼','panda'],['🦁','lion'],['🐸','frog']]],
+  ['חלל',[['🚀','rocket'],['🪐','planet'],['🌙','moon'],['☄️','comet'],['👽','alien'],['🛸','UFO']]],
+  ['ספורט',[['⚽','ball'],['🏀','basketball'],['🎾','tennis'],['🛹','skateboard'],['🥇','gold medal'],['🏆','trophy']]],
+  ['אוכל',[['🍕','pizza'],['🍦','ice cream'],['🍩','donut'],['🍉','watermelon'],['🍪','cookies'],['🧁','cupcake']]]];
+var STK_T=[5,10,15,20,30,40,50,60,75,90,105,120,140,160,180,200,225,250,280,310,340,380,420,460];
+var STK_SP=[['daily1','🎯','target','משחקים באתגר היומי'],['fire','🔥','fire','רצף של 3 ימים'],['diamond','💎','diamond','10/10 באתגר היומי'],['crown','👑','crown','90% במבחן הדמה'],['grad','🎓','graduate','מוכנים בכל 9 הנושאים']];
+function spCond(id){
+  if(id==='daily1')return (meta.dailyCount||0)>=1;
+  if(id==='fire')return streakNow()>=3;
+  if(id==='diamond')return !!meta.dailyPerfect;
+  if(id==='crown')return !!(prog.mock&&prog.mock.best>=90);
+  if(id==='grad')return readyCount()===TOPICS.length;
+  return false;
+}
+function refreshStickers(){
+  if(!meta.stk||typeof meta.stk!=='object')meta.stk={};
+  var ch=false;STK_SP.forEach(function(x){if(!meta.stk[x[0]]&&spCond(x[0])){meta.stk[x[0]]=true;ch=true;}});
+  if(ch)saveMeta();
+}
+function stkAll(){
+  var out=[],k=0;
+  STK_SETS.forEach(function(s){s[1].forEach(function(x){out.push({id:'s'+k,e:x[0],n:x[1],set:s[0],need:STK_T[k],ok:meta.stars>=STK_T[k]});k++;});});
+  STK_SP.forEach(function(x){out.push({id:x[0],e:x[1],n:x[2],set:'מדבקות מיוחדות',how:x[3],ok:!!(meta.stk&&meta.stk[x[0]])});});
+  return out;
+}
+function stkIds(){return stkAll().filter(function(x){return x.ok;}).map(function(x){return x.id;});}
+function album(){
+  refreshStickers();
+  var all=stkAll(),got=all.filter(function(x){return x.ok;}).length,sets={},order=[];
+  all.forEach(function(x){if(!sets[x.set]){sets[x.set]=[];order.push(x.set);}sets[x.set].push(x);});
+  $app.innerHTML=topbar('אלבום המדבקות',true)+'<p class="ins" style="margin:0 0 6px">'+got+' מתוך '+all.length+' מדבקות. מתחת לכל מדבקה כתוב איך אומרים אותה באנגלית. לחיצה על מדבקה משמיעה את המילה.</p>'+
+    order.map(function(s){return '<h2 class="sec">'+s+'</h2><div class="alb">'+sets[s].map(function(x){
+      return x.ok?'<button class="stk got" data-n="'+esc(x.n)+'"><span class="se">'+x.e+'</span><bdi class="en">'+esc(x.n)+'</bdi></button>'
+                 :'<div class="stk"><span class="se lock">?</span><span class="need">'+(x.need?x.need+' כוכבים':esc(x.how))+'</span></div>';}).join('')+'</div>';}).join('');
+  wireBack();
+  Array.prototype.forEach.call($app.querySelectorAll('.stk.got'),function(b){b.addEventListener('click',function(){say(b.getAttribute('data-n'));});});
+}
+var AC=null;
+function tone(fs){
+  if(meta.mute)return;
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var t=AC.currentTime;
+    fs.forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain(),s=t+i*0.09;o.type='triangle';o.frequency.value=f;
+      g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.16,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.25);
+      o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+0.3);});}catch(e){}
+}
+function chime(){tone([660,880]);}
+function fanfare(){tone([523,659,784,1047]);}
+function burst(){
+  try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;}catch(e){}
+  var layer=document.createElement('div');layer.className='burst';layer.setAttribute('aria-hidden','true');
+  for(var k=0;k<18;k++){var s=document.createElement('span');s.innerHTML=STAR;var a=Math.random()*2*Math.PI,d=80+Math.random()*120;
+    s.style.setProperty('--dx',(Math.cos(a)*d).toFixed(0)+'px');s.style.setProperty('--dy',(Math.sin(a)*d).toFixed(0)+'px');layer.appendChild(s);}
+  document.body.appendChild(layer);setTimeout(function(){if(layer.parentNode)layer.parentNode.removeChild(layer);},1100);
+}
+
+/* ---------- dashboard ---------- */
+function mkUniverse(){
+  var U={words:[],cloze:[],wh:[],read:[],write:[],clock:[],days:[],sounds:[],prepPics:[]};
+  V.forEach(function(e){if(e[2]!=='day')U.words.push({id:'w:'+e[0]+'|'+e[2],label:e[0],sub:e[1],pos:e[2]});});
+  CL.forEach(function(c){U.cloze.push({id:'c:'+c[0],label:c[0].replace('___',c[1])});});
+  WT.forEach(function(w){U.wh.push({id:'wt:'+w[0].join(' '),label:w[0].join(' ')+'?'});});
+  WA.forEach(function(a){U.wh.push({id:'wa:'+a[0],label:a[0]+' → '+a[1]});});
+  [P1,P2,P3].forEach(function(pp){pp.qs.forEach(function(x){U.read.push({id:'r:'+pp.title+'|'+x[0],label:x[0]+' ('+pp.title+')'});});});
+  PREPS.forEach(function(pr){U.write.push({id:'ws:'+pr,label:'The ___ is '+pr+' the ___.'});U.prepPics.push({id:'p:'+pr,label:pr});});
+  TIMES.forEach(function(t){U.clock.push({id:'t:'+digital(t[0],t[1]),label:digital(t[0],t[1])});});
+  DAYS.forEach(function(d,i){U.days.push({id:'d:'+d,label:d,sub:DAYS_HE[i]});});
+  LG.forEach(function(g){U.sounds.push({id:'l:'+g.join('-'),label:g.join(' · ')});});
+  GAP.forEach(function(g){U.sounds.push({id:'g:'+g[2],label:g[2]+' ('+g[1]+')'});});
+  MAGIC.forEach(function(m){U.sounds.push({id:'m:'+m[1],label:m[0]+' + e → '+m[1]});});
+  return U;
+}
+function allOf(U){return [].concat(U.words,U.cloze,U.wh,U.read,U.write,U.clock,U.days,U.sounds,U.prepPics);}
+function st(id){var r=items[id];return !r?'n':(r.s>=2?'m':'p');}
+function cnt(list){var o={m:0,p:0,n:0};list.forEach(function(x){o[st(x.id)]++;});return o;}
+var MARK={m:'✓ ',p:'• ',n:''};
+var STX={m:'נלמד',p:'בתרגול',n:'טרם תורגל'};
+function dashSum(){var a=allOf(mkUniverse()),c=cnt(a);return c.m+' מתוך '+a.length+' פריטים נלמדו';}
+function segBar(c,t){var m=t?c.m/t*100:0,p=t?c.p/t*100:0;return '<div class="seg" role="img" aria-label="'+c.m+' מתוך '+t+'"><i class="sm" style="width:'+m.toFixed(1)+'%"></i><i class="sp" style="width:'+p.toFixed(1)+'%"></i></div>';}
+function chipsOf(list){return list.map(function(x){return '<button class="wc st-'+st(x.id)+'" data-id="'+esc(x.id)+'"><bdi class="en">'+MARK[st(x.id)]+esc(x.label)+'</bdi></button>';}).join('');}
+function listOf(list){return '<ul class="il">'+list.map(function(x){return '<li class="st-'+st(x.id)+'"><bdi class="en">'+MARK[st(x.id)]+esc(x.label)+'</bdi></li>';}).join('')+'</ul>';}
+function detailsOf(title,list){var c=cnt(list);return '<details class="dd"><summary><span>'+title+'</span><span>'+c.m+'/'+list.length+'</span></summary>'+listOf(list)+'</details>';}
+function chartSVG(){
+  var a=[],i,max=10;
+  for(i=13;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var k=dstr(d);
+    var v=(meta.hist&&meta.hist[k])||0;if(meta.todayD===k&&meta.today>v)v=meta.today;
+    a.push({v:v,w:'אבגדהוש'.charAt(d.getDay()),n:d.getDate(),now:i===0});if(v>max)max=v;}
+  var g='<line x1="0" y1="100" x2="420" y2="100" class="ch-base"/>';
+  a.forEach(function(x,j){var h=Math.round(x.v/max*78),bx=j*30+5;
+    if(x.v>0)g+='<rect x="'+bx+'" y="'+(100-h)+'" width="20" height="'+h+'" rx="3" class="ch-bar"/><text x="'+(bx+10)+'" y="'+(100-h-4)+'" text-anchor="middle" class="ch-v">'+x.v+'</text>';
+    g+='<text x="'+(bx+10)+'" y="113" text-anchor="middle" class="ch-t"'+(x.now?' style="font-weight:700"':'')+'>'+x.w+'</text><text x="'+(bx+10)+'" y="125" text-anchor="middle" class="ch-t">'+x.n+'</text>';});
+  return '<svg viewBox="0 0 420 130" class="chart" role="img" aria-label="כוכבים ב-14 הימים האחרונים">'+g+'</svg>';
+}
+function weakOf(U){
+  return allOf(U).filter(function(x){var r=items[x.id];return r&&r.w>0&&st(x.id)!=='m';}).sort(function(a,b){return items[b.id].w-items[a.id].w;});
+}
+function buildWeak(ids){
+  var gens=[mkGap,mkMagic,mkWHtap,mkWHans,mkWHmean,mkVEnHe,mkVHeEn,mkVType,mkCloze,mkClkA,mkClkB,mkClkD,mkClkW,mkDaysRel,mkDaysHeb,mkPrepFill,mkPrepPick,mkPrepMean,mkWrite];
+  if(TTS)gens.push(mkListen);
+  var cand={};
+  function add(arr){arr.forEach(function(it){if(it.id&&ids.indexOf(it.id)>=0)(cand[it.id]=cand[it.id]||[]).push(it);});}
+  for(var r=0;r<30;r++){gens.forEach(function(g){try{add(g());}catch(e){}});}
+  [P1,P2,P3].forEach(function(pp){add(mkRead(pp));});
+  return ids.map(function(id){return cand[id]?pick(cand[id],1)[0]:null;}).filter(Boolean);
+}
+function dashboard(){
+  var U=mkUniverse(),map={},all=allOf(U);
+  all.forEach(function(x){map[x.id]=x;});
+  var tot=cnt(all),pct=all.length?Math.round(tot.m/all.length*100):0;
+  var rounds=0;for(var k in prog){if(prog[k]&&prog[k].plays)rounds+=prog[k].plays;}
+  var C=2*Math.PI*42;
+  var pw=function(p){return U.words.filter(function(x){return x.pos===p;});};
+  var vw=U.words.filter(function(x){return x.pos==='adj'||x.pos==='noun'||x.pos==='verb';});
+  var topics=[['חוקי קריאה וצלילים',U.sounds],['מילות שאלה',pw('wh').concat(U.wh)],['אוצר מילים',vw.concat(U.cloze)],['השעון',U.clock],['ימות השבוע',U.days],['מילות יחס',pw('prep').concat(U.prepPics)],['הבנת הנקרא',U.read],['כתיבה',U.write]];
+  var nm=prog['name.caps'];
+  var weak=weakOf(U),wFilter='all';
+  var sentGroups=[['משפטי השלמה',U.cloze],['משפטי שאלה ותשובה',U.wh],['שאלות הבנת הנקרא',U.read],['כתיבת משפטי יחס',U.write]];
+  var wcats=[['all','הכול'],['adj','תארים'],['noun','שמות עצם'],['verb','פעלים'],['wh','שאלה'],['prep','יחס']];
+  var h=topbar('לוח התקדמות',true)+'<div class="dash">'+
+   '<section class="panel"><div class="hero2"><svg class="ring" viewBox="0 0 100 100" role="img" aria-label="'+pct+' אחוז"><circle cx="50" cy="50" r="42" class="bg"/><circle cx="50" cy="50" r="42" class="fg" stroke-dasharray="'+(C*pct/100).toFixed(1)+' '+C.toFixed(1)+'"/><text x="50" y="57" text-anchor="middle">'+pct+'%</text></svg>'+
+   '<div class="kpis"><div class="kpi"><b>'+tot.m+'/'+all.length+'</b><span>פריטים נלמדו</span></div><div class="kpi"><b>'+tot.p+'</b><span>בתרגול</span></div><div class="kpi"><b>'+meta.stars+'</b><span>כוכבים</span></div><div class="kpi"><b>'+rounds+'</b><span>סבבים</span></div></div></div>'+
+   '<div class="legend"><span><i class="dot m"></i>✓ נלמד</span><span><i class="dot p"></i>• בתרגול</span><span><i class="dot n"></i>טרם תורגל</span></div>'+
+   '<p class="gloss">נלמד = שתי תשובות נכונות ברצף בניסיון הראשון. טעות מחזירה את הרצף לאפס.</p></section>'+
+   '<section class="panel"><h2>14 הימים האחרונים</h2>'+chartSVG()+'<p class="gloss">כוכבים שנאספו בכל יום. כוכבים מלפני העדכון האחרון לא מפורטים כאן.</p></section>'+
+   '<section class="panel"><h2>לפי נושא</h2><div class="trow"><div class="l"><span>1. כתיבת שם</span><span>'+(nm?'הושלם '+nm.best+'%':'לא התחיל')+'</span></div></div>'+
+   topics.map(function(t,i){var c=cnt(t[1]);return '<div class="trow"><div class="l"><span>'+(i+2)+'. '+t[0]+'</span><span>'+c.m+'/'+t[1].length+'</span></div>'+segBar(c,t[1].length)+'</div>';}).join('')+'</section>'+
+   '<section class="panel"><h2>מילים</h2><div id="wsum"></div><div class="chips" id="wchips">'+wcats.map(function(c){return '<button class="chip" data-c="'+c[0]+'" aria-pressed="'+(c[0]==='all')+'">'+c[1]+'</button>';}).join('')+'</div><div class="wcs" id="wgrid"></div><div class="wdet" hidden></div></section>'+
+   '<section class="panel"><h2>משפטים</h2>'+sentGroups.map(function(g){return detailsOf(g[0],g[1]);}).join('')+'</section>'+
+   '<section class="panel"><h2>שעון</h2><div class="trow">'+segBar(cnt(U.clock),U.clock.length)+'</div><div class="wcs">'+chipsOf(U.clock)+'</div><div class="wdet" hidden></div></section>'+
+   '<section class="panel"><h2>ימות השבוע</h2><div class="wcs">'+chipsOf(U.days)+'</div><div class="wdet" hidden></div></section>'+
+   '<section class="panel"><h2>מילות יחס בתמונות</h2><div class="wcs">'+chipsOf(U.prepPics)+'</div><div class="wdet" hidden></div></section>'+
+   '<section class="panel"><h2>צלילים</h2>'+detailsOf('האזנה, צירופי אותיות ו-Magic e',U.sounds)+'</section>'+
+   '<section class="panel"><h2>לחזק</h2>'+(weak.length?weak.slice(0,8).map(function(x){return '<div class="wk"><bdi class="en">'+esc(x.label)+'</bdi><span>✗ '+items[x.id].w+'</span></div>';}).join('')+'<div><button class="btn" id="weakgo">תרגול הפריטים האלה</button></div>':'<p class="ins" style="margin:0">אין כרגע פריטים שצריך לחזק. כל טעות תופיע כאן.</p>')+'</section></div>';
+  $app.innerHTML=h;wireBack();
+  function wire(scope){
+    Array.prototype.forEach.call(scope.querySelectorAll('.wc'),function(b){b.addEventListener('click',function(){
+      var x=map[b.getAttribute('data-id')],r=items[x.id]||{c:0,w:0},box=b.parentNode.nextElementSibling;
+      var snd=TTS&&(x.pos||x.id.indexOf('d:')===0||x.id.indexOf('p:')===0);
+      box.innerHTML='<b class="en">'+esc(x.label)+'</b>'+(x.sub?'<span>'+esc(x.sub)+'</span>':'')+'<span>'+STX[st(x.id)]+'</span><span>✓ '+r.c+' · ✗ '+r.w+'</span>'+(snd?'<button class="icon" aria-label="השמעה">'+SPK+'</button>':'');
+      box.hidden=false;
+      var sb=box.querySelector('button');if(sb)sb.addEventListener('click',function(){say(x.label);});
+    });});
+  }
+  function drawWords(){
+    var list=wFilter==='all'?U.words:U.words.filter(function(x){return x.pos===wFilter;}),c=cnt(list);
+    document.getElementById('wsum').innerHTML='<div class="trow"><div class="l"><span>נלמדו</span><span>'+c.m+'/'+list.length+'</span></div>'+segBar(c,list.length)+'</div>';
+    var g=document.getElementById('wgrid');g.innerHTML=chipsOf(list);wire(g);
+    g.nextElementSibling.hidden=true;
+  }
+  drawWords();
+  Array.prototype.forEach.call(document.querySelectorAll('#wchips .chip'),function(b){b.addEventListener('click',function(){
+    wFilter=b.getAttribute('data-c');
+    Array.prototype.forEach.call(document.querySelectorAll('#wchips .chip'),function(o){o.setAttribute('aria-pressed',o===b?'true':'false');});
+    drawWords();
+  });});
+  wire($app);
+  var wg=document.getElementById('weakgo');
+  if(wg)wg.addEventListener('click',function(){
+    var ids=weakOf(U).slice(0,10).map(function(x){return x.id;});
+    var its=buildWeak(ids);
+    if(!its.length)return;
+    go(function(){runQuiz({key:'weak',title:'תרגול הפריטים החלשים',items:its,regen:function(){return buildWeak(weakOf(mkUniverse()).slice(0,10).map(function(x){return x.id;}));}});});
+  });
+}
+
+function makeCode(){return btoa(unescape(encodeURIComponent(JSON.stringify({p:prog,m:meta,i:items}))));}
+function readCode(c){return JSON.parse(decodeURIComponent(escape(atob(c.replace(/\s/g,'')))));}
+function copyText(text,ta,msgEl){
+  var okMsg='הועתק';
+  function fallback(){try{ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);msgEl.textContent='סימנו את הטקסט. לחצו והעתיקו ידנית.';}catch(e){}}
+  try{navigator.clipboard.writeText(text).then(function(){msgEl.textContent=okMsg;},fallback);}catch(e){fallback();}
+}
+function myStars(){
+  var L=levelOf(meta.stars),sc=meta.stars;
+  var shareText=function(){return 'תרגול אנגלית · כיתה '+CLASS.name+'\n'+(meta.name?meta.name+': ':'')+meta.stars+' כוכבים · רמה '+LEVELS[L][1]+' · רצף '+streakNow()+' ימים\nמי אוסף יותר?';};
+  $app.innerHTML=topbar('הכוכבים שלי',true)+
+   '<section class="qcard"><div class="score" style="padding:0"><div class="big">'+STAR+' '+meta.stars+'</div><p style="margin:0"><b class="en">'+LEVELS[L][1]+'</b> · '+LEVELS[L][2]+'</p></div>'+
+   '<label class="ins" for="nm">איך קוראים לכם? (יופיע בהודעה שמשתפים)</label><input class="txt" id="nm" dir="auto" type="text" autocomplete="off" maxlength="24" value="'+esc(meta.name||'')+'">'+
+   '<div class="row-btns"><button class="btn" id="share">העתקת הודעה לשיתוף</button></div><textarea class="ta" id="sharebox" readonly aria-label="הודעה לשיתוף" style="direction:rtl;text-align:right;word-break:normal">'+esc(shareText())+'</textarea><div class="fb" id="sm" role="status"></div></section>'+
+   '<div class="row-btns" style="margin-top:12px"><button class="btn ghost" id="mute">'+(meta.mute?'הפעלת צלילים':'השתקת צלילים')+'</button></div>'+
+   '<h2 class="sec">רמות</h2><ul class="ladder">'+LEVELS.map(function(l,k){return '<li class="'+(sc>=l[0]?'got':'')+'">'+(sc>=l[0]?STAR:'')+'<b class="en">'+l[1]+'</b><span>'+l[2]+'</span><span class="n">'+l[0]+' כוכבים</span></li>';}).join('')+'</ul>'+
+   '<h2 class="sec">אותות נושא</h2><p class="ins" style="margin:0 0 10px">מקבלים אות כשמגיעים ל-80% לפחות בכל התרגילים של הנושא.</p><div class="badges">'+TOPICS.map(function(t){
+     var got=t.modes.every(function(m){var p=prog[t.id+'.'+m.id];return m.run||(p&&p.best>=80);});
+     return '<div class="badge '+(got?'got':'')+'"><span class="tile" style="--h:'+t.h+'">'+t.n+'</span><span>'+t.he+'</span></div>';}).join('')+'</div>'+
+   '<h2 class="sec">גיבוי</h2><p class="ins" style="margin:0 0 10px">הכוכבים נשמרים בדפדפן של המכשיר. כדי לעבור למכשיר אחר, העתיקו את הקוד והדביקו אותו שם.</p>'+
+   '<textarea class="ta" id="code" readonly aria-label="קוד גיבוי"></textarea><div class="row-btns" style="margin:8px 0 14px"><button class="btn ghost" id="cc">העתקת קוד</button></div>'+
+   '<textarea class="ta" id="restore" placeholder="הדביקו כאן קוד גיבוי" aria-label="שחזור מקוד"></textarea><div class="row-btns" style="margin-top:8px"><button class="btn ghost" id="rs">שחזור</button></div><div class="fb" id="rm" role="status"></div>';
+  wireBack();
+  document.getElementById('code').value=makeCode();
+  var nm=document.getElementById('nm'),sb=document.getElementById('sharebox'),sm=document.getElementById('sm');
+  document.getElementById('mute').addEventListener('click',function(){meta.mute=!meta.mute;saveMeta();this.textContent=meta.mute?'הפעלת צלילים':'השתקת צלילים';if(!meta.mute)chime();});
+  nm.addEventListener('input',function(){meta.name=nm.value.trim();saveMeta();sb.value=shareText();});
+  document.getElementById('share').addEventListener('click',function(){copyText(shareText(),sb,sm);});
+  document.getElementById('cc').addEventListener('click',function(){copyText(makeCode(),document.getElementById('code'),sm);});
+  var armed=false,rs=document.getElementById('rs'),rm=document.getElementById('rm');
+  rs.addEventListener('click',function(){
+    var raw=document.getElementById('restore').value;
+    if(!raw.trim()){rm.className='fb bad';rm.textContent='הדביקו קוד קודם.';return;}
+    var o;try{o=readCode(raw);if(!o||typeof o.p!=='object'||typeof o.m!=='object')throw 0;}catch(e){rm.className='fb bad';rm.textContent='הקוד לא תקין.';armed=false;rs.textContent='שחזור';return;}
+    if(!armed){armed=true;rs.textContent='לחצו שוב לאישור: זה מחליף את מה ששמור כאן';return;}
+    prog=o.p;for(var k in o.m){meta[k]=o.m[k];}if(o.i&&typeof o.i==='object'){items=o.i;saveItems();}saveProg();saveMeta();
+    rm.className='fb good';rm.textContent='השחזור הושלם.';armed=false;rs.textContent='שחזור';
+    nav.pop();go(myStars);
+  });
+}
+home();
+})();
+</script>
+
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
+</body>
+</html>
