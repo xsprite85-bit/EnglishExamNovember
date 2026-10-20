@@ -207,6 +207,11 @@ details.dd summary{cursor:pointer;display:flex;justify-content:space-between;gap
 @keyframes fly{from{transform:translate(0,0) scale(.4);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.1);opacity:0}}
 .plus{animation:pop .45s ease-out}
 @keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.btn.wa{background:#25D366;color:#073B1A}
+a.btn{display:inline-block;text-decoration:none;text-align:center}
+.ov{position:fixed;inset:0;z-index:60;background:rgba(20,10,4,.78);display:grid;place-items:center;padding:16px;overflow:auto}
+.ovb{display:grid;gap:12px;justify-items:center;max-width:420px;background:var(--surface);color:var(--fg);padding:14px;border-radius:18px}
+.ovb img{width:100%;max-width:300px;border-radius:12px;display:block}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -420,10 +425,12 @@ function runQuiz(cfg){
       (lv>startLevel?'<p class="lvup">עליתם לרמה חדשה: <b class="en">'+LEVELS[lv][1]+'</b> · '+LEVELS[lv][2]+'</p>':'')+
       (newStk.length?'<div class="newstk"><p style="margin:0">מדבקה חדשה באלבום!</p><div class="nsrow">'+newStk.map(function(x){return '<span class="stk got"><span class="se">'+x.e+'</span><bdi class="en">'+esc(x.n)+'</bdi></span>';}).join('')+'</div></div>':'')+
       (share?'<textarea class="ta" id="fshare" readonly aria-label="תוצאה לשיתוף" style="direction:rtl;text-align:right;word-break:normal">'+esc(share)+'</textarea><div class="fb" id="fsm" role="status"></div>':'')+
-      '<div class="row-btns">'+(share?'<button class="btn" id="fsb">העתקת התוצאה לשיתוף</button>':'')+(cfg.noAgain?'':'<button class="btn" id="again">סבב חדש</button>')+'<button class="btn ghost" id="out">חזרה</button></div></section>';
+      '<div class="row-btns">'+(share?'<button class="btn wa" id="fwa">שיתוף בוואטסאפ</button><button class="btn" id="fimg">שיתוף תמונה</button><button class="btn ghost" id="fsb">העתקה</button>':'')+(cfg.noAgain?'':'<button class="btn" id="again">סבב חדש</button>')+'<button class="btn ghost" id="out">חזרה</button></div></section>';
     wireBack();
     if(bonus||lv>startLevel||newStk.length){fanfare();burst();}
-    if(share)document.getElementById('fsb').addEventListener('click',function(){copyText(share,document.getElementById('fshare'),document.getElementById('fsm'));});
+    if(share){document.getElementById('fsb').addEventListener('click',function(){copyText(share,document.getElementById('fshare'),document.getElementById('fsm'));});
+      document.getElementById('fwa').addEventListener('click',function(){openWA(withUrl(share));});
+      document.getElementById('fimg').addEventListener('click',shareImage);}
     var ag=document.getElementById('again');
     if(ag)ag.addEventListener('click',function(){runQuiz({key:cfg.key,title:cfg.title,items:cfg.regen(),regen:cfg.regen,n:cfg.n,shuffle:cfg.shuffle,mult:cfg.mult});window.scrollTo(0,0);});
     document.getElementById('out').addEventListener('click',back);
@@ -739,6 +746,7 @@ function home(){
    '<button class="daily" id="daily"><span class="dl-k">האתגר היומי · '+dshort()+'</span><span class="dl-t">'+(dl?'התוצאה שלכם היום: '+meta.daily.s+'/'+meta.daily.t:'10 שאלות, אותן שאלות לכל הכיתה')+'</span><span class="dl-s">'+(dl?'אפשר לשחק שוב, בלי כוכבים כפולים. מחר יש אתגר חדש.':'כוכבים כפולים בפעם הראשונה היום')+'</span></button>'+
    '<button class="mode" id="album" style="margin-top:10px"><span class="tt"><b>אלבום המדבקות</b><span class="sub">'+sgot+' מתוך '+sa.length+(nxs?' · עוד '+(nxs.need-meta.stars)+' כוכבים למדבקה הבאה':'')+'</span></span></button>'+
    '<button class="mode" id="dash" style="margin-top:10px"><span class="tt"><b>לוח התקדמות</b><span class="sub">'+dashSum()+'</span></span></button>'+
+   '<button class="mode" id="invite" style="margin-top:10px"><span class="tt"><b>הזמינו חבר מהכיתה</b><span class="sub">שליחת הקישור בוואטסאפ</span></span></button>'+
    '<button class="mock" id="mock"><span class="mock-t">מבחן דמה</span>'+mb+'</button>'+
    '<ol class="topics">'+TOPICS.map(function(t,i){var s=topicStatus(t);
      return '<li><button class="topic" data-i="'+i+'"><span class="tile" style="--h:'+t.h+'">'+t.n+'</span><span class="tt"><b>'+t.he+'</b><span class="sub en">'+esc(t.en)+'</span><span class="meter"><i style="width:'+s.pct+'%"></i></span></span></button></li>';}).join('')+'</ol>'+
@@ -746,6 +754,7 @@ function home(){
   document.getElementById('mock').addEventListener('click',function(){go(function(){runQuiz({key:'mock',title:'מבחן דמה',items:mkMock(),regen:mkMock,shuffle:false,mult:2});});});
   document.getElementById('mystars').addEventListener('click',function(){go(myStars);});
   document.getElementById('dash').addEventListener('click',function(){go(dashboard);});
+  document.getElementById('invite').addEventListener('click',function(){openWA(inviteText());});
   document.getElementById('daily').addEventListener('click',startDaily);
   document.getElementById('album').addEventListener('click',function(){go(album);});
   Array.prototype.forEach.call($app.querySelectorAll('.topic'),function(b){b.addEventListener('click',function(){var t=TOPICS[+b.getAttribute('data-i')];go(function(){topicScreen(t);});});});
@@ -842,6 +851,67 @@ function burst(){
   for(var k=0;k<18;k++){var s=document.createElement('span');s.innerHTML=STAR;var a=Math.random()*2*Math.PI,d=80+Math.random()*120;
     s.style.setProperty('--dx',(Math.cos(a)*d).toFixed(0)+'px');s.style.setProperty('--dy',(Math.sin(a)*d).toFixed(0)+'px');layer.appendChild(s);}
   document.body.appendChild(layer);setTimeout(function(){if(layer.parentNode)layer.parentNode.removeChild(layer);},1100);
+}
+
+/* ---------- sharing: WhatsApp text, share image ---------- */
+function appUrl(){try{if(/^https?:$/.test(location.protocol))return location.origin+location.pathname.replace(/index\.html$/,'');}catch(e){}return '';}
+function inviteText(){var u=appUrl();return 'תרגול אנגלית לכיתה '+CLASS.name+' למבחן ב-2.11 ⭐ אתגר יומי, כוכבים ומדבקות'+(u?'\n'+u:'');}
+function withUrl(t){var u=appUrl();return u?t+'\n'+u:t;}
+function openWA(text){
+  var a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(text);a.target='_blank';a.rel='noopener noreferrer';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+function loadFonts(){try{return Promise.all([document.fonts.load('800 60px Rubik'),document.fonts.load('600 60px Fredoka'),document.fonts.load('500 40px Rubik')]).catch(function(){});}catch(e){return Promise.resolve();}}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function starPath(c,cx,cy,ro,ri){c.beginPath();for(var k=0;k<10;k++){var a=-Math.PI/2+k*Math.PI/5,r=k%2?ri:ro;if(k)c.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));else c.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a));}c.closePath();}
+function drawCard(){
+  var W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;var c=cv.getContext('2d');
+  var OR='#FF6115',PO='#FFFCF4',INK='#2B1608',MUT='#7A6350',LINE='#EBDDCB',HI='#FFD55A';
+  var HEB='Rubik,"Segoe UI",Arial,sans-serif',EMO='"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+  function T(txt,x,y,font,color,align,dir){c.font=font;c.fillStyle=color;c.textAlign=align||'center';c.direction=dir||'rtl';c.fillText(txt,x,y);}
+  c.fillStyle=PO;c.fillRect(0,0,W,H);
+  c.fillStyle=OR;c.fillRect(0,0,W,380);
+  T('כיתה '+CLASS.name+' · תרגול אנגלית',W-80,130,'500 42px '+HEB,INK,'right');
+  var nm=meta.name||'התלמיד שלי',fs=120;
+  c.font='800 '+fs+'px '+HEB;while(c.measureText(nm).width>W-160&&fs>56){fs-=6;c.font='800 '+fs+'px '+HEB;}
+  T(nm,W-80,270,'800 '+fs+'px '+HEB,INK,'right');
+  starPath(c,W/2,640,210,86);c.fillStyle=HI;c.fill();c.lineWidth=10;c.strokeStyle=INK;c.lineJoin='round';c.stroke();
+  T(String(meta.stars),W/2,690,'600 150px Fredoka,'+HEB,INK,'center','ltr');
+  T('כוכבים',W/2,930,'600 52px '+HEB,MUT,'center');
+  var L=levelOf(meta.stars);
+  T(LEVELS[L][1],W/2,1020,'600 76px Fredoka,'+HEB,OR,'center','ltr');
+  T(LEVELS[L][2],W/2,1075,'500 40px '+HEB,MUT,'center');
+  var bw=300,gap=30,x0=(W-(3*bw+2*gap))/2,dl=(meta.daily&&meta.daily.d===dstr());
+  [['רצף',streakNow()+' ימים'],['היום',todayStars()+' כוכבים'],['אתגר יומי',dl?meta.daily.s+'/'+meta.daily.t:'—']].forEach(function(v,i){
+    var x=x0+i*(bw+gap);rr(c,x,1120,bw,130,28);c.fillStyle='#fff';c.fill();c.lineWidth=4;c.strokeStyle=LINE;c.stroke();
+    T(v[0],x+bw/2,1170,'500 34px '+HEB,MUT,'center');T(v[1],x+bw/2,1222,'700 46px '+HEB,INK,'center');});
+  var all=stkAll(),got=all.filter(function(s){return s.ok;}).length;
+  T('האלבום שלי · '+got+'/'+all.length,W-80,1330,'700 44px '+HEB,INK,'right');
+  var per=10,cell=96,sx=(W-per*cell)/2+cell/2;
+  all.forEach(function(s,i){var cx=sx+(i%per)*cell,cy=1400+Math.floor(i/per)*cell;
+    if(s.ok)T(s.e,cx,cy+22,'58px '+EMO,INK,'center','ltr');
+    else{c.beginPath();c.arc(cx,cy,30,0,Math.PI*2);c.fillStyle=LINE;c.fill();}});
+  var cd=countdown(),ct=typeof cd.n==='number'?cd.n+' ימים למבחן':(cd.n==='מחר'?'המבחן מחר!':cd.n==='היום'?'המבחן היום. בהצלחה!':'כל הכבוד על התרגול!');
+  rr(c,60,1730,W-120,110,30);c.fillStyle=OR;c.fill();
+  T(ct,W/2,1800,'800 52px '+HEB,INK,'center');
+  var u=appUrl();if(u)T(u.replace(/^https?:\/\//,''),W/2,1892,'500 32px '+HEB,MUT,'center','ltr');
+  return cv;
+}
+function showCard(url){
+  var o=document.createElement('div');o.className='ov';
+  o.innerHTML='<div class="ovb"><img src="'+url+'" alt="כרטיס לשיתוף"><p class="ins" style="margin:0">לחצו לחיצה ארוכה על התמונה ובחרו שמירה, ואז שתפו אותה מהגלריה.</p><div class="row-btns"><a class="btn" download="my-english-stars.png" href="'+url+'">שמירת תמונה</a><button class="btn ghost" id="ovc">סגירה</button></div></div>';
+  document.body.appendChild(o);
+  o.querySelector('#ovc').addEventListener('click',function(){if(o.parentNode)o.parentNode.removeChild(o);});
+}
+function shareImage(){
+  loadFonts().then(function(){
+    var cv=drawCard();
+    cv.toBlob(function(blob){
+      var file=null;try{if(blob)file=new File([blob],'my-english-stars.png',{type:'image/png'});}catch(e){}
+      if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],text:inviteText()}).catch(function(){});}
+      else showCard(cv.toDataURL('image/png'));
+    },'image/png');
+  });
 }
 
 /* ---------- dashboard ---------- */
@@ -966,7 +1036,7 @@ function myStars(){
   $app.innerHTML=topbar('הכוכבים שלי',true)+
    '<section class="qcard"><div class="score" style="padding:0"><div class="big">'+STAR+' '+meta.stars+'</div><p style="margin:0"><b class="en">'+LEVELS[L][1]+'</b> · '+LEVELS[L][2]+'</p></div>'+
    '<label class="ins" for="nm">איך קוראים לכם? (יופיע בהודעה שמשתפים)</label><input class="txt" id="nm" dir="auto" type="text" autocomplete="off" maxlength="24" value="'+esc(meta.name||'')+'">'+
-   '<div class="row-btns"><button class="btn" id="share">העתקת הודעה לשיתוף</button></div><textarea class="ta" id="sharebox" readonly aria-label="הודעה לשיתוף" style="direction:rtl;text-align:right;word-break:normal">'+esc(shareText())+'</textarea><div class="fb" id="sm" role="status"></div></section>'+
+   '<div class="row-btns"><button class="btn wa" id="shwa">שיתוף בוואטסאפ</button><button class="btn" id="shimg">שיתוף תמונה</button><button class="btn ghost" id="share">העתקת הודעה</button></div><textarea class="ta" id="sharebox" readonly aria-label="הודעה לשיתוף" style="direction:rtl;text-align:right;word-break:normal">'+esc(shareText())+'</textarea><div class="fb" id="sm" role="status"></div></section>'+
    '<div class="row-btns" style="margin-top:12px"><button class="btn ghost" id="mute">'+(meta.mute?'הפעלת צלילים':'השתקת צלילים')+'</button></div>'+
    '<h2 class="sec">רמות</h2><ul class="ladder">'+LEVELS.map(function(l,k){return '<li class="'+(sc>=l[0]?'got':'')+'">'+(sc>=l[0]?STAR:'')+'<b class="en">'+l[1]+'</b><span>'+l[2]+'</span><span class="n">'+l[0]+' כוכבים</span></li>';}).join('')+'</ul>'+
    '<h2 class="sec">אותות נושא</h2><p class="ins" style="margin:0 0 10px">מקבלים אות כשמגיעים ל-80% לפחות בכל התרגילים של הנושא.</p><div class="badges">'+TOPICS.map(function(t){
@@ -981,6 +1051,8 @@ function myStars(){
   document.getElementById('mute').addEventListener('click',function(){meta.mute=!meta.mute;saveMeta();this.textContent=meta.mute?'הפעלת צלילים':'השתקת צלילים';if(!meta.mute)chime();});
   nm.addEventListener('input',function(){meta.name=nm.value.trim();saveMeta();sb.value=shareText();});
   document.getElementById('share').addEventListener('click',function(){copyText(shareText(),sb,sm);});
+  document.getElementById('shwa').addEventListener('click',function(){openWA(withUrl(shareText()));});
+  document.getElementById('shimg').addEventListener('click',shareImage);
   document.getElementById('cc').addEventListener('click',function(){copyText(makeCode(),document.getElementById('code'),sm);});
   var armed=false,rs=document.getElementById('rs'),rm=document.getElementById('rm');
   rs.addEventListener('click',function(){
